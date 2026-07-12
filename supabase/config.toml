@@ -1,0 +1,22 @@
+# Supabase local development config
+# See: https://supabase.com/docs/guides/cli/config
+
+project_id = "qr-digital-menu"
+
+[api]
+enabled = true
+port = 54321
+
+[db]
+port = 54322
+
+[studio]
+enabled = true
+port = 54323
+
+[storage]
+enabled = true
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
