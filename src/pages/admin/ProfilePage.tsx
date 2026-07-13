@@ -71,35 +71,3 @@ export function ProfilePage() {
     </div>
   );
 }
-
-export function SettingsPage() {
-  return (
-    <div>
-      <AdminHeader title="System Settings" />
-
-      <div className="p-6 lg:p-8">
-        <div className="max-w-2xl space-y-6">
-          <section className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-text-primary">QR Code</h2>
-            <p className="mt-2 text-sm text-text-secondary">
-              Your restaurant menu is accessible at the following URL. Use this URL to generate QR codes for your tables.
-            </p>
-            <div className="mt-4 rounded-xl bg-gray-50 px-4 py-3 font-mono text-sm text-text-primary">
-              {window.location.origin}/r/daros-hotel
-            </div>
-          </section>
-
-          <section className="rounded-2xl border border-border bg-white p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-text-primary">Environment</h2>
-            <ul className="mt-4 space-y-2 text-sm text-text-secondary">
-              <li>Frontend: Vercel</li>
-              <li>Backend: Supabase Cloud</li>
-              <li>Storage: Supabase Storage</li>
-              <li>Auth: Supabase Authentication</li>
-            </ul>
-          </section>
-        </div>
-      </div>
-    </div>
-  );
-}

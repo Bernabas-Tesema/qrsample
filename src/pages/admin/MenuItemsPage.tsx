@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Plus, Pencil, Trash2 } from 'lucide-react';
 import { AdminHeader } from '@/components/admin/Sidebar';
@@ -31,6 +31,8 @@ export function MenuItemsAdminPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<MenuItem | null>(null);
   const [saving, setSaving] = useState(false);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
+  const [categoryFilter, setCategoryFilter] = useState('all');
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<MenuItemFormData>({
     defaultValues: {
@@ -45,8 +47,24 @@ export function MenuItemsAdminPage() {
   });
 
   const imageValue = watch('image');
-
   const categoryOptions = categories.map((c) => ({ value: c.id, label: c.name }));
+
+  const filteredItems = useMemo(() => {
+    if (categoryFilter === 'all') return items;
+    return items.filter((i) => i.category_id === categoryFilter);
+  }, [items, categoryFilter]);
+
+  const grouped = useMemo(() => {
+    const map = new Map<string, MenuItem[]>();
+    for (const item of filteredItems) {
+      const key = item.category_id;
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(item);
+    }
+    return categories
+      .filter((c) => map.has(c.id))
+      .map((c) => ({ category: c, items: map.get(c.id)! }));
+  }, [filteredItems, categories]);
 
   const openCreate = () => {
     setEditing(null);
@@ -55,7 +73,7 @@ export function MenuItemsAdminPage() {
       description: '',
       image: '',
       price: 0,
-      category_id: categories[0]?.id || '',
+      category_id: categoryFilter !== 'all' ? categoryFilter : categories[0]?.id || '',
       availability: 'available',
       display_order: items.length + 1,
     });
@@ -106,70 +124,146 @@ export function MenuItemsAdminPage() {
     }
   };
 
+  const toggleAvailability = async (item: MenuItem) => {
+    const next = item.availability === 'available' ? 'unavailable' : 'available';
+    setTogglingId(item.id);
+    try {
+      await updateMenuItem(item.id, { availability: next });
+      await logActivity(
+        restaurantId,
+        next === 'available' ? 'Enabled today' : 'Disabled today',
+        'menu_item',
+        item.id,
+        item.name
+      );
+      refresh();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : 'Failed to update availability');
+    } finally {
+      setTogglingId(null);
+    }
+  };
+
   return (
     <div>
       <AdminHeader
         title="Menu Items"
         action={
           <Button onClick={openCreate}>
-            <Plus className="h-4 w-4" /> Add Item
+            <Plus className="h-4 w-4" /> Add Menu Item
           </Button>
         }
       />
 
       <div className="p-6 lg:p-8">
+        <div className="mb-6 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-text-secondary">
+          <strong className="text-text-primary">Available today:</strong> tick the box for each item
+          that is available. Unticked items stay hidden from the customer menu.
+        </div>
+
+        <div className="mb-4 max-w-xs">
+          <Select
+            label="Filter by category"
+            options={[{ value: 'all', label: 'All Categories' }, ...categoryOptions]}
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          />
+        </div>
+
         {loading ? (
           <PageLoader />
         ) : items.length === 0 ? (
-          <EmptyState title="No menu items" description="Add your first menu item" action={<Button onClick={openCreate}>Add Item</Button>} />
+          <EmptyState
+            title="No menu items"
+            description="Add your first menu item"
+            action={<Button onClick={openCreate}>Add Item</Button>}
+          />
         ) : (
-          <div className="overflow-x-auto rounded-xl border border-border bg-white">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border bg-gray-50">
-                  <th className="px-4 py-3 text-left font-medium text-text-secondary">Item</th>
-                  <th className="px-4 py-3 text-left font-medium text-text-secondary">Category</th>
-                  <th className="px-4 py-3 text-left font-medium text-text-secondary">Price</th>
-                  <th className="px-4 py-3 text-left font-medium text-text-secondary">Status</th>
-                  <th className="px-4 py-3 text-right font-medium text-text-secondary">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((item) => (
-                  <tr key={item.id} className="border-b border-border last:border-0 hover:bg-gray-50">
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-3">
-                        {item.image && (
-                          <img src={item.image} alt="" className="h-10 w-10 rounded-lg object-cover" />
-                        )}
-                        <span className="font-medium text-text-primary">{item.name}</span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 text-text-secondary">
-                      {item.category?.name || '—'}
-                    </td>
-                    <td className="px-4 py-3 font-medium text-primary">
-                      {formatPrice(item.price)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <Badge variant={item.availability === 'available' ? 'success' : 'error'}>
-                        {item.availability}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <div className="flex justify-end gap-1">
-                        <Button variant="ghost" size="sm" onClick={() => openEdit(item)}>
-                          <Pencil className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleDelete(item)}>
-                          <Trash2 className="h-4 w-4 text-error" />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="space-y-8">
+            {grouped.map(({ category, items: catItems }) => (
+              <section key={category.id} className="overflow-hidden rounded-xl border border-border bg-white">
+                <div className="flex items-center justify-between border-b border-border bg-gray-50 px-4 py-3">
+                  <h3 className="font-display text-lg font-semibold text-text-primary">
+                    {category.name}
+                  </h3>
+                  <span className="text-xs text-text-secondary">
+                    {catItems.filter((i) => i.availability === 'available').length}/{catItems.length}{' '}
+                    available today
+                  </span>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="px-4 py-3 text-left font-medium text-text-secondary w-28">
+                          Available today
+                        </th>
+                        <th className="px-4 py-3 text-left font-medium text-text-secondary">Item</th>
+                        <th className="px-4 py-3 text-left font-medium text-text-secondary">Price</th>
+                        <th className="px-4 py-3 text-left font-medium text-text-secondary">Status</th>
+                        <th className="px-4 py-3 text-right font-medium text-text-secondary">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {catItems.map((item) => {
+                        const available = item.availability === 'available';
+                        return (
+                          <tr
+                            key={item.id}
+                            className={`border-b border-border last:border-0 hover:bg-gray-50 ${
+                              !available ? 'opacity-60' : ''
+                            }`}
+                          >
+                            <td className="px-4 py-3">
+                              <label className="inline-flex cursor-pointer items-center gap-2">
+                                <input
+                                  type="checkbox"
+                                  className="h-5 w-5 rounded border-border text-primary focus:ring-primary"
+                                  checked={available}
+                                  disabled={togglingId === item.id}
+                                  onChange={() => toggleAvailability(item)}
+                                />
+                                <span className="sr-only">Available today</span>
+                              </label>
+                            </td>
+                            <td className="px-4 py-3">
+                              <div className="flex items-center gap-3">
+                                {item.image && (
+                                  <img
+                                    src={item.image}
+                                    alt=""
+                                    className="h-10 w-10 rounded-lg object-cover"
+                                  />
+                                )}
+                                <span className="font-medium text-text-primary">{item.name}</span>
+                              </div>
+                            </td>
+                            <td className="px-4 py-3 font-medium text-primary">
+                              {formatPrice(item.price)}
+                            </td>
+                            <td className="px-4 py-3">
+                              <Badge variant={available ? 'success' : 'error'}>
+                                {available ? 'Available' : 'Unavailable'}
+                              </Badge>
+                            </td>
+                            <td className="px-4 py-3 text-right">
+                              <div className="flex justify-end gap-1">
+                                <Button variant="ghost" size="sm" onClick={() => openEdit(item)}>
+                                  <Pencil className="h-4 w-4" />
+                                </Button>
+                                <Button variant="ghost" size="sm" onClick={() => handleDelete(item)}>
+                                  <Trash2 className="h-4 w-4 text-error" />
+                                </Button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            ))}
           </div>
         )}
       </div>
@@ -186,11 +280,7 @@ export function MenuItemsAdminPage() {
             error={errors.name?.message}
             {...register('name', { required: 'Name is required' })}
           />
-          <Textarea
-            label="Description"
-            rows={3}
-            {...register('description')}
-          />
+          <Textarea label="Description / Ingredients" rows={3} {...register('description')} />
           <div className="grid gap-4 sm:grid-cols-2">
             <Input
               label="Price (ETB)"
@@ -212,14 +302,17 @@ export function MenuItemsAdminPage() {
             folder="menu-items"
           />
           <div className="grid gap-4 sm:grid-cols-2">
-            <Select
-              label="Availability"
-              options={[
-                { value: 'available', label: 'Available' },
-                { value: 'unavailable', label: 'Unavailable' },
-              ]}
-              {...register('availability')}
-            />
+            <label className="flex items-center gap-3 rounded-xl border border-border px-4 py-3">
+              <input
+                type="checkbox"
+                className="h-5 w-5 rounded border-border text-primary focus:ring-primary"
+                checked={watch('availability') === 'available'}
+                onChange={(e) =>
+                  setValue('availability', e.target.checked ? 'available' : 'unavailable')
+                }
+              />
+              <span className="text-sm font-medium text-text-primary">Available today</span>
+            </label>
             <Input
               label="Display Order"
               type="number"

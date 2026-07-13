@@ -31,6 +31,12 @@ const ContactPage = lazy(() =>
 function RestaurantRoutes() {
   const { slug } = useParams<{ slug: string }>();
 
+  // /r/admin is not a restaurant — send staff to the admin app
+  if (slug?.toLowerCase() === 'admin') {
+    window.location.replace('/admin/login');
+    return <PageLoader text="Opening admin..." />;
+  }
+
   return (
     <RestaurantProvider slug={slug}>
       <CustomerLayout />
@@ -45,6 +51,9 @@ export default function CustomerApp() {
         <Routes>
           <Route path="/" element={<Navigate to="/r/daros-hotel" replace />} />
 
+          {/* Prevent /admin from falling through to the hotel menu */}
+          <Route path="/admin/*" element={<PageLoader text="Loading admin dashboard..." />} />
+
           <Route path="/r/:slug" element={<RestaurantRoutes />}>
             <Route index element={<HomePage />} />
             <Route path="menu" element={<MenuPage />} />
@@ -55,7 +64,7 @@ export default function CustomerApp() {
             <Route path="contact" element={<ContactPage />} />
           </Route>
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/r/daros-hotel" replace />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

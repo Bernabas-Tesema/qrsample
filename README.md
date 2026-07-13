@@ -103,12 +103,31 @@ Generate QR codes pointing to your restaurant URL using any QR generator.
 
 ## Deployment
 
+Customer menu and admin dashboard deploy together as **one Vercel project** (separate URLs):
+
+| App | Path |
+|-----|------|
+| Customer (QR target) | `https://YOUR_DOMAIN/r/daros-hotel` |
+| Admin login | `https://YOUR_DOMAIN/admin/login` |
+
 ### Frontend (Vercel)
 
-1. Push to GitHub
-2. Import project in Vercel
-3. Set environment variables (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`)
+1. Push this repo to GitHub
+2. Import the project in [Vercel](https://vercel.com)
+3. Set environment variables:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+   - `VITE_DEFAULT_RESTAURANT_SLUG=daros-hotel`
+   - `VITE_USE_DEMO=false` (after Supabase migrations)
+   - `VITE_PUBLIC_SITE_URL=https://YOUR_DOMAIN` (for QR codes)
 4. Deploy
+
+### QR codes for tables
+
+1. After deploy, open **Admin → QR & Settings**
+2. Download the PNG QR code
+3. Print and place on each table  
+   The QR opens only the **customer menu**, not the admin panel.
 
 ### Backend (Supabase)
 

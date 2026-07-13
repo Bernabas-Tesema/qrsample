@@ -96,6 +96,9 @@ export function AdminLoginPage() {
         <p className="mt-6 text-center text-xs text-text-secondary">
           This area is for authorized staff only.
         </p>
+        <p className="mt-3 rounded-xl bg-gray-100 px-4 py-3 text-center text-xs text-text-secondary">
+          Demo login: <strong>berni@gmail.com</strong> / <strong>12341234</strong>
+        </p>
       </div>
     </div>
   );

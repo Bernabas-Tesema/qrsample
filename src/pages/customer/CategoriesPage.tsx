@@ -8,7 +8,7 @@ import { Grid3X3 } from 'lucide-react';
 export function CategoriesPage() {
   const { restaurant } = useRestaurant();
   const { categories, loading } = useCategories(restaurant?.id, true);
-  const { items } = useMenuItems(restaurant?.id);
+  const { items } = useMenuItems(restaurant?.id, undefined, { availableOnly: true });
 
   const getItemCount = (categoryId: string) =>
     items.filter((i) => i.category_id === categoryId).length;

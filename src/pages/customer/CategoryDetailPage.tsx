@@ -13,7 +13,9 @@ import type { Category } from '@/types';
 export function CategoryDetailPage() {
   const { categoryId } = useParams<{ categoryId: string }>();
   const { restaurant, slug } = useRestaurant();
-  const { items, loading: itemsLoading } = useMenuItems(restaurant?.id, categoryId);
+  const { items, loading: itemsLoading } = useMenuItems(restaurant?.id, categoryId, {
+    availableOnly: true,
+  });
   const [category, setCategory] = useState<Category | null>(null);
   const [loading, setLoading] = useState(true);
 

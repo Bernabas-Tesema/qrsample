@@ -13,15 +13,29 @@ import {
   isDemoMode,
   getDemoRestaurantBySlug,
   getDemoRestaurantById,
-  getDemoCategories,
   getDemoCategoryById,
-  getDemoMenuItems,
-  getDemoMenuItemById,
   searchDemoMenuItems,
   getDemoRelatedItems,
-  getDemoDashboardStats,
   DAROS_RESTAURANT_ID,
 } from '@/data/daros-menu';
+import {
+  demoGetCategories,
+  demoGetMenuItems,
+  demoGetMenuItemById,
+  demoCreateMenuItem,
+  demoUpdateMenuItem,
+  demoDeleteMenuItem,
+  demoCreateCategory,
+  demoUpdateCategory,
+  demoDeleteCategory,
+  isDemoAdminSession,
+} from '@/data/demo-store';
+
+function useLocalData(): boolean {
+  return isDemoMode() || isDemoAdminSession();
+}
+
+export { DAROS_RESTAURANT_ID };
 
 // ─── Restaurant ───────────────────────────────────────────────
 
@@ -96,7 +110,7 @@ function mapRestaurant(row: Record<string, unknown>): Restaurant {
 // ─── Categories ───────────────────────────────────────────────
 
 export async function getCategories(restaurantId: string, activeOnly = false): Promise<Category[]> {
-  if (isDemoMode()) return getDemoCategories(restaurantId, activeOnly);
+  if (useLocalData()) return demoGetCategories(restaurantId, activeOnly);
 
   let query = supabase
     .from('categories')
@@ -107,12 +121,17 @@ export async function getCategories(restaurantId: string, activeOnly = false): P
   if (activeOnly) query = query.eq('status', 'active');
 
   const { data, error } = await query;
-  if (error) return getDemoCategories(restaurantId, activeOnly);
-  return (data || []).map(mapCategory);
+  if (error) return demoGetCategories(restaurantId, activeOnly);
+  const mapped = (data || []).map(mapCategory);
+  // Tables exist but seed not run yet
+  if (mapped.length === 0) return demoGetCategories(restaurantId, activeOnly);
+  return mapped;
 }
 
 export async function getCategoryById(id: string): Promise<Category | null> {
-  if (isDemoMode()) return getDemoCategoryById(id);
+  if (useLocalData()) {
+    return demoGetCategories(DAROS_RESTAURANT_ID).find((c) => c.id === id) || getDemoCategoryById(id);
+  }
 
   const { data, error } = await supabase.from('categories').select('*').eq('id', id).single();
   if (error) return getDemoCategoryById(id);
@@ -122,12 +141,16 @@ export async function getCategoryById(id: string): Promise<Category | null> {
 export async function createCategory(
   category: Omit<Category, 'id' | 'created_at'>
 ): Promise<Category> {
+  if (useLocalData()) return demoCreateCategory(category);
+
   const { data, error } = await supabase.from('categories').insert(category).select().single();
   if (error) throw new Error(error.message);
   return mapCategory(data);
 }
 
 export async function updateCategory(id: string, updates: Partial<Category>): Promise<Category> {
+  if (useLocalData()) return demoUpdateCategory(id, updates);
+
   const { data, error } = await supabase
     .from('categories')
     .update(updates)
@@ -139,6 +162,10 @@ export async function updateCategory(id: string, updates: Partial<Category>): Pr
 }
 
 export async function deleteCategory(id: string): Promise<void> {
+  if (useLocalData()) {
+    demoDeleteCategory(id);
+    return;
+  }
   const { error } = await supabase.from('categories').delete().eq('id', id);
   if (error) throw new Error(error.message);
 }
@@ -168,9 +195,15 @@ function mapCategory(row: Record<string, unknown>): Category {
 
 export async function getMenuItems(
   restaurantId: string,
-  categoryId?: string
+  categoryId?: string,
+  options?: { availableOnly?: boolean }
 ): Promise<MenuItem[]> {
-  if (isDemoMode()) return getDemoMenuItems(restaurantId, categoryId);
+  const availableOnly = options?.availableOnly ?? false;
+
+  if (useLocalData()) {
+    const items = demoGetMenuItems(restaurantId, categoryId);
+    return availableOnly ? items.filter((i) => i.availability === 'available') : items;
+  }
 
   let query = supabase
     .from('menu_items')
@@ -179,14 +212,23 @@ export async function getMenuItems(
     .order('display_order', { ascending: true });
 
   if (categoryId) query = query.eq('category_id', categoryId);
+  if (availableOnly) query = query.eq('availability', 'available');
 
   const { data, error } = await query;
-  if (error) return getDemoMenuItems(restaurantId, categoryId);
-  return (data || []).map(mapMenuItem);
+  if (error) {
+    const items = demoGetMenuItems(restaurantId, categoryId);
+    return availableOnly ? items.filter((i) => i.availability === 'available') : items;
+  }
+  const mapped = (data || []).map(mapMenuItem);
+  if (mapped.length === 0) {
+    const items = demoGetMenuItems(restaurantId, categoryId);
+    return availableOnly ? items.filter((i) => i.availability === 'available') : items;
+  }
+  return mapped;
 }
 
 export async function getMenuItemById(id: string): Promise<MenuItem | null> {
-  if (isDemoMode()) return getDemoMenuItemById(id);
+  if (useLocalData()) return demoGetMenuItemById(id);
 
   const { data, error } = await supabase
     .from('menu_items')
@@ -194,7 +236,7 @@ export async function getMenuItemById(id: string): Promise<MenuItem | null> {
     .eq('id', id)
     .single();
 
-  if (error) return getDemoMenuItemById(id);
+  if (error) return demoGetMenuItemById(id);
   return mapMenuItem(data);
 }
 
@@ -202,22 +244,29 @@ export async function searchMenuItems(
   restaurantId: string,
   query: string
 ): Promise<MenuItem[]> {
-  if (isDemoMode()) return searchDemoMenuItems(restaurantId, query);
+  if (useLocalData()) {
+    return searchDemoMenuItems(restaurantId, query).filter((i) => i.availability === 'available');
+  }
 
   const { data, error } = await supabase
     .from('menu_items')
     .select('*, category:categories(*)')
     .eq('restaurant_id', restaurantId)
+    .eq('availability', 'available')
     .or(`name.ilike.%${query}%,description.ilike.%${query}%`)
     .order('name');
 
-  if (error) return searchDemoMenuItems(restaurantId, query);
+  if (error) {
+    return searchDemoMenuItems(restaurantId, query).filter((i) => i.availability === 'available');
+  }
   return (data || []).map(mapMenuItem);
 }
 
 export async function createMenuItem(
   item: Omit<MenuItem, 'id' | 'created_at' | 'updated_at' | 'category'>
 ): Promise<MenuItem> {
+  if (useLocalData()) return demoCreateMenuItem(item);
+
   const { data, error } = await supabase
     .from('menu_items')
     .insert(item)
@@ -234,6 +283,8 @@ export async function updateMenuItem(
   const { category, ...rest } = updates;
   void category;
 
+  if (useLocalData()) return demoUpdateMenuItem(id, rest);
+
   const { data, error } = await supabase
     .from('menu_items')
     .update({ ...rest, updated_at: new Date().toISOString() })
@@ -245,6 +296,10 @@ export async function updateMenuItem(
 }
 
 export async function deleteMenuItem(id: string): Promise<void> {
+  if (useLocalData()) {
+    demoDeleteMenuItem(id);
+    return;
+  }
   const { error } = await supabase.from('menu_items').delete().eq('id', id);
   if (error) throw new Error(error.message);
 }
@@ -293,36 +348,53 @@ function mapMenuItem(row: Record<string, unknown>): MenuItem {
 // ─── Dashboard ───────────────────────────────────────────────
 
 export async function getDashboardStats(restaurantId: string): Promise<DashboardStats> {
-  if (isDemoMode()) return getDemoDashboardStats(restaurantId);
-
-  const [categories, items] = await Promise.all([
-    getCategories(restaurantId),
-    getMenuItems(restaurantId),
-  ]);
-
-  return {
+  const buildStats = (categories: { length: number }, items: { availability: string }[]) => ({
     totalCategories: categories.length,
     totalMenuItems: items.length,
     availableItems: items.filter((i) => i.availability === 'available').length,
     unavailableItems: items.filter((i) => i.availability === 'unavailable').length,
-  };
+  });
+
+  if (useLocalData()) {
+    return buildStats(demoGetCategories(restaurantId), demoGetMenuItems(restaurantId));
+  }
+
+  try {
+    const [categories, items] = await Promise.all([
+      getCategories(restaurantId),
+      getMenuItems(restaurantId),
+    ]);
+
+    // Supabase not seeded yet — show built-in Daros menu counts
+    if (categories.length === 0 && items.length === 0) {
+      return buildStats(demoGetCategories(restaurantId), demoGetMenuItems(restaurantId));
+    }
+
+    return buildStats(categories, items);
+  } catch {
+    return buildStats(demoGetCategories(restaurantId), demoGetMenuItems(restaurantId));
+  }
 }
 
 export async function getRecentActivity(
   restaurantId: string,
   limit = 10
 ): Promise<ActivityLog[]> {
-  if (isDemoMode()) return [];
+  if (useLocalData() || isDemoMode()) return [];
 
-  const { data, error } = await supabase
-    .from('activity_logs')
-    .select('*')
-    .eq('restaurant_id', restaurantId)
-    .order('created_at', { ascending: false })
-    .limit(limit);
+  try {
+    const { data, error } = await supabase
+      .from('activity_logs')
+      .select('*')
+      .eq('restaurant_id', restaurantId)
+      .order('created_at', { ascending: false })
+      .limit(limit);
 
-  if (error) throw new Error(error.message);
-  return (data || []) as ActivityLog[];
+    if (error) return [];
+    return (data || []) as ActivityLog[];
+  } catch {
+    return [];
+  }
 }
 
 export async function logActivity(
@@ -415,5 +487,3 @@ export async function updateProfile(
   if (error) throw new Error(error.message);
   return data;
 }
-
-export { DAROS_RESTAURANT_ID };

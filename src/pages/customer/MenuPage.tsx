@@ -10,7 +10,7 @@ import { UtensilsCrossed } from 'lucide-react';
 
 export function MenuPage() {
   const { restaurant } = useRestaurant();
-  const { items, loading } = useMenuItems(restaurant?.id);
+  const { items, loading } = useMenuItems(restaurant?.id, undefined, { availableOnly: true });
   const { categories } = useCategories(restaurant?.id, true);
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');

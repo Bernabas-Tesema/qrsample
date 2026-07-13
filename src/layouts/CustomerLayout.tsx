@@ -9,7 +9,14 @@ export function CustomerLayout() {
   const { loading, error } = useRestaurant();
 
   if (loading) return <PageLoader text="Loading menu..." />;
-  if (error) return <ErrorState title="Restaurant Not Found" description={error} />;
+  if (error) {
+    return (
+      <ErrorState
+        title="Restaurant Not Found"
+        description={`${error}. Guest menu: /r/daros-hotel — Admin: /admin/login`}
+      />
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col">

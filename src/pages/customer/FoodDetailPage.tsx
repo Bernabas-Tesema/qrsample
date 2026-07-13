@@ -22,22 +22,54 @@ export function FoodDetailPage() {
   const [item, setItem] = useState<MenuItem | null>(null);
   const [related, setRelated] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [imgSrc, setImgSrc] = useState(PLACEHOLDER_IMAGE);
+  const [fallbackAttempt, setFallbackAttempt] = useState(0);
 
   useEffect(() => {
     if (!itemId) return;
 
     async function load() {
+      setLoading(true);
       const data = await getMenuItemById(itemId!);
       setItem(data);
       if (data) {
         const rel = await getRelatedMenuItems(data.id, data.category_id);
         setRelated(rel);
+        setImgSrc(resolveMenuItemImage(data.name, data.category_id, data.image));
+        setFallbackAttempt(0);
+      } else {
+        setRelated([]);
       }
       setLoading(false);
     }
 
     load();
   }, [itemId]);
+
+  useEffect(() => {
+    if (!item) return;
+    setImgSrc(resolveMenuItemImage(item.name, item.category_id, item.image));
+    setFallbackAttempt(0);
+  }, [item]);
+
+  const handleImgError = () => {
+    if (!item) return;
+    const next = fallbackAttempt + 1;
+    setFallbackAttempt(next);
+    if (next === 1) {
+      const mapped = getMenuItemImageByName(item.name);
+      if (mapped) {
+        setImgSrc(mapped);
+        return;
+      }
+    }
+    const cat = CATEGORY_ID_TO_NAME[item.category_id];
+    if (next <= 2 && cat && CATEGORY_IMAGES[cat]) {
+      setImgSrc(CATEGORY_IMAGES[cat]);
+      return;
+    }
+    setImgSrc(PLACEHOLDER_IMAGE);
+  };
 
   if (loading) return <PageLoader text="Loading item..." />;
   if (!item) {
@@ -54,30 +86,6 @@ export function FoodDetailPage() {
   const isUnavailable = item.availability === 'unavailable';
   const ingredients = parseIngredients(item.description);
   const isPricing = isPricingDescription(item.description);
-  const [imgSrc, setImgSrc] = useState(() =>
-    resolveMenuItemImage(item.name, item.category_id, item.image)
-  );
-  const [fallbackAttempt, setFallbackAttempt] = useState(0);
-
-  useEffect(() => {
-    setImgSrc(resolveMenuItemImage(item.name, item.category_id, item.image));
-    setFallbackAttempt(0);
-  }, [item]);
-
-  const handleImgError = () => {
-    const next = fallbackAttempt + 1;
-    setFallbackAttempt(next);
-    if (next === 1) {
-      const mapped = getMenuItemImageByName(item.name);
-      if (mapped) { setImgSrc(mapped); return; }
-    }
-    const cat = CATEGORY_ID_TO_NAME[item.category_id];
-    if (next <= 2 && cat && CATEGORY_IMAGES[cat]) {
-      setImgSrc(CATEGORY_IMAGES[cat]);
-      return;
-    }
-    setImgSrc(PLACEHOLDER_IMAGE);
-  };
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
@@ -89,7 +97,6 @@ export function FoodDetailPage() {
         Back to Menu
       </Link>
 
-      {/* Header */}
       <div className="mt-6 overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
         <div className="relative aspect-[16/9] sm:aspect-[21/9] overflow-hidden bg-gray-100">
           <img
@@ -118,7 +125,6 @@ export function FoodDetailPage() {
           </Badge>
         </div>
 
-        {/* Ingredients — main focus */}
         <div className="px-6 py-8">
           <div className="flex items-center gap-2">
             <div className="rounded-lg bg-primary/10 p-2">

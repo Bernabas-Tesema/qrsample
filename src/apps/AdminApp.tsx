@@ -28,7 +28,7 @@ const ProfilePage = lazy(() =>
   import('@/pages/admin/ProfilePage').then((m) => ({ default: m.ProfilePage }))
 );
 const SettingsPage = lazy(() =>
-  import('@/pages/admin/ProfilePage').then((m) => ({ default: m.SettingsPage }))
+  import('@/pages/admin/SettingsPage').then((m) => ({ default: m.SettingsPage }))
 );
 
 export default function AdminApp() {

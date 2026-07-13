@@ -11,10 +11,12 @@ import {
   X,
   ChevronLeft,
   ExternalLink,
+  QrCode,
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/utils';
 import { useAuth } from '@/contexts/AuthContext';
+import { getCustomerMenuUrl } from '@/components/admin/QrCodePanel';
 
 const navItems = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -22,8 +24,8 @@ const navItems = [
   { to: '/menu-items', label: 'Menu Items', icon: UtensilsCrossed },
   { to: '/restaurant', label: 'Restaurant', icon: Settings },
   { to: '/media', label: 'Media Library', icon: Image },
+  { to: '/settings', label: 'QR & Settings', icon: QrCode },
   { to: '/profile', label: 'Profile', icon: User },
-  { to: '/settings', label: 'Settings', icon: Settings },
 ];
 
 export function AdminSidebar() {
@@ -76,7 +78,7 @@ export function AdminSidebar() {
 
       <div className="space-y-1 border-t border-border p-4">
         <a
-          href="/r/daros-hotel"
+          href={getCustomerMenuUrl()}
           target="_blank"
           rel="noopener noreferrer"
           className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-text-secondary hover:bg-gray-50 hover:text-text-primary transition-colors"

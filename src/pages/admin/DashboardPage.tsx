@@ -17,16 +17,19 @@ export function DashboardPage() {
 
   useEffect(() => {
     async function load() {
+      setLoading(true);
       try {
-        const [s, a] = await Promise.all([
-          getDashboardStats(restaurantId),
-          getRecentActivity(restaurantId),
-        ]);
+        const s = await getDashboardStats(restaurantId);
         setStats(s);
+      } catch {
+        setStats({ totalCategories: 0, totalMenuItems: 0, availableItems: 0, unavailableItems: 0 });
+      }
+
+      try {
+        const a = await getRecentActivity(restaurantId);
         setActivity(a);
       } catch {
-        // Use defaults on error
-        setStats({ totalCategories: 0, totalMenuItems: 0, availableItems: 0, unavailableItems: 0 });
+        setActivity([]);
       } finally {
         setLoading(false);
       }

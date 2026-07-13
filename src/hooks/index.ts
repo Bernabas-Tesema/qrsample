@@ -28,16 +28,21 @@ export function useCategories(restaurantId: string | undefined, activeOnly = fal
   return { categories, loading, error, refresh };
 }
 
-export function useMenuItems(restaurantId: string | undefined, categoryId?: string) {
+export function useMenuItems(
+  restaurantId: string | undefined,
+  categoryId?: string,
+  options?: { availableOnly?: boolean }
+) {
   const [items, setItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const availableOnly = options?.availableOnly ?? false;
 
   const refresh = useCallback(async () => {
     if (!restaurantId) return;
     setLoading(true);
     try {
-      const data = await getMenuItems(restaurantId, categoryId);
+      const data = await getMenuItems(restaurantId, categoryId, { availableOnly });
       setItems(data);
       setError(null);
     } catch (e) {
@@ -45,7 +50,7 @@ export function useMenuItems(restaurantId: string | undefined, categoryId?: stri
     } finally {
       setLoading(false);
     }
-  }, [restaurantId, categoryId]);
+  }, [restaurantId, categoryId, availableOnly]);
 
   useEffect(() => {
     refresh();
