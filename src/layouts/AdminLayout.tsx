@@ -2,6 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { AdminSidebar } from '@/components/admin/Sidebar';
 import { PageLoader } from '@/components/ui/Loading';
 import { useAuth } from '@/contexts/AuthContext';
+import { ScrollToTop } from '@/components/ScrollToTop';
 
 export function AdminLayout() {
   const { user, loading, isAdmin } = useAuth();
@@ -14,6 +15,7 @@ export function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <ScrollToTop />
       <AdminSidebar />
       <div className="lg:pl-64">
         <Outlet />

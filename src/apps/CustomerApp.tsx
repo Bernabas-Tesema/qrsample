@@ -1,5 +1,5 @@
-import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useParams, useLocation } from 'react-router-dom';
 import { RestaurantProvider } from '@/contexts/RestaurantContext';
 import { PageLoader } from '@/components/ui/Loading';
 
@@ -28,13 +28,55 @@ const ContactPage = lazy(() =>
   import('@/pages/customer/AboutContactPage').then((m) => ({ default: m.ContactPage }))
 );
 
+/** Full page load so Vite/Vercel serves admin/index.html */
+function RedirectToAdmin() {
+  const location = useLocation();
+  const [showFallback, setShowFallback] = useState(false);
+
+  const target =
+    location.pathname === '/admin' || location.pathname === '/admin/'
+      ? '/admin/login'
+      : `${location.pathname}${location.search}${location.hash}` || '/admin/login';
+
+  useEffect(() => {
+    const key = 'sobana_admin_redirect_at';
+    const last = Number(sessionStorage.getItem(key) || 0);
+    const now = Date.now();
+
+    // Avoid reload loops if the customer SPA keeps catching /admin
+    if (now - last < 4000) {
+      setShowFallback(true);
+      return;
+    }
+
+    sessionStorage.setItem(key, String(now));
+    const t = window.setTimeout(() => setShowFallback(true), 2500);
+    window.location.assign(target.startsWith('/admin') ? target : '/admin/login');
+    return () => window.clearTimeout(t);
+  }, [target]);
+
+  if (showFallback) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-4 text-center">
+        <p className="text-text-secondary">Admin is taking longer than expected.</p>
+        <a
+          href="/admin/login"
+          className="rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-white"
+        >
+          Open Admin Login
+        </a>
+      </div>
+    );
+  }
+
+  return <PageLoader text="Opening admin..." />;
+}
+
 function RestaurantRoutes() {
   const { slug } = useParams<{ slug: string }>();
 
-  // /r/admin is not a restaurant — send staff to the admin app
   if (slug?.toLowerCase() === 'admin') {
-    window.location.replace('/admin/login');
-    return <PageLoader text="Opening admin..." />;
+    return <RedirectToAdmin />;
   }
 
   return (
@@ -51,8 +93,7 @@ export default function CustomerApp() {
         <Routes>
           <Route path="/" element={<Navigate to="/r/sobana-hotel" replace />} />
 
-          {/* Prevent /admin from falling through to the hotel menu */}
-          <Route path="/admin/*" element={<PageLoader text="Loading admin dashboard..." />} />
+          <Route path="/admin/*" element={<RedirectToAdmin />} />
 
           <Route path="/r/:slug" element={<RestaurantRoutes />}>
             <Route index element={<HomePage />} />

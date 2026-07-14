@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { PageLoader } from '@/components/ui/Loading';
@@ -32,13 +32,16 @@ const SettingsPage = lazy(() =>
 );
 
 export default function AdminApp() {
+  useEffect(() => {
+    sessionStorage.removeItem('sobana_admin_redirect_at');
+  }, []);
+
   return (
     <BrowserRouter basename="/admin">
       <AuthProvider>
         <Suspense fallback={<PageLoader text="Loading dashboard..." />}>
           <Routes>
             <Route path="/login" element={<AdminLoginPage />} />
-
             <Route path="/" element={<AdminLayout />}>
               <Route index element={<DashboardPage />} />
               <Route path="categories" element={<CategoriesAdminPage />} />
@@ -49,7 +52,7 @@ export default function AdminApp() {
               <Route path="settings" element={<SettingsPage />} />
             </Route>
 
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </Suspense>
       </AuthProvider>

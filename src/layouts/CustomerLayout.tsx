@@ -4,6 +4,7 @@ import { CustomerFooter } from '@/components/customer/Footer';
 import { PageLoader } from '@/components/ui/Loading';
 import { ErrorState } from '@/components/ui/EmptyState';
 import { useRestaurant } from '@/contexts/RestaurantContext';
+import { ScrollToTop } from '@/components/ScrollToTop';
 
 export function CustomerLayout() {
   const { loading, error } = useRestaurant();
@@ -20,6 +21,7 @@ export function CustomerLayout() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <ScrollToTop />
       <CustomerNavbar />
       <main className="flex-1 pt-16">
         <Outlet />
