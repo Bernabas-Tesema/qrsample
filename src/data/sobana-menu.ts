@@ -2,20 +2,20 @@ import type { Restaurant, Category, MenuItem } from '@/types';
 import { resolveCategoryImage } from '@/data/menu-images';
 import { getMenuItemImageByName } from '@/data/item-images';
 
-export const DAROS_RESTAURANT_ID = 'b0000000-0000-0000-0000-000000000001';
+export const SOBANA_RESTAURANT_ID = 'b0000000-0000-0000-0000-000000000001';
 
-export const DAROS_RESTAURANT: Restaurant = {
-  id: DAROS_RESTAURANT_ID,
-  slug: 'daros-hotel',
-  name: 'Daros International Hotel',
-  logo: '/images/daros-logo.png',
-  banner: null,
+export const SOBANA_RESTAURANT: Restaurant = {
+  id: SOBANA_RESTAURANT_ID,
+  slug: 'sobana-hotel',
+  name: 'Sobana Hotel',
+  logo: '/images/sobana-logo.png',
+  banner: '/images/sobana-banner.jpg',
   description:
-    'Welcome to Daros Hotel Arba Minch — enjoy our full restaurant menu featuring traditional Ethiopian dishes, international cuisine, fresh seafood, pizza, pasta, and premium beverages.',
+    'Welcome to Sobana Hotel Arba Minch — enjoy our full restaurant menu featuring traditional Ethiopian dishes, international cuisine, fresh seafood, pizza, pasta, and premium beverages.',
   phone: '+251 912 549 009',
-  email: 'info@daroshotel.et',
+  email: 'info@sobanahotel.et',
   address: 'Arba Minch, Ethiopia',
-  welcome_message: 'Thank you for visiting Daros International Hotel — enjoy every meal.',
+  welcome_message: 'Thank you for visiting Sobana Hotel — enjoy every meal.',
   opening_hours: {
     monday: '6:00 AM - 11:00 PM',
     tuesday: '6:00 AM - 11:00 PM',
@@ -38,7 +38,7 @@ type MenuSeed = { name: string; price: number; description?: string };
 function cat(id: string, name: string, order: number): Category {
   return {
     id,
-    restaurant_id: DAROS_RESTAURANT_ID,
+    restaurant_id: SOBANA_RESTAURANT_ID,
     name,
     image: resolveCategoryImage(name),
     display_order: order,
@@ -56,7 +56,7 @@ function item(
   return {
     id,
     category_id: categoryId,
-    restaurant_id: DAROS_RESTAURANT_ID,
+    restaurant_id: SOBANA_RESTAURANT_ID,
     name: seed.name,
     description: seed.description || null,
     image: getMenuItemImageByName(seed.name) ?? null,
@@ -88,7 +88,7 @@ const C = {
   whisky: 'cat-whisky',
 } as const;
 
-export const DAROS_CATEGORIES: Category[] = [
+export const SOBANA_CATEGORIES: Category[] = [
   cat(C.breakfast, 'Breakfast', 1),
   cat(C.soup, 'Soup', 2),
   cat(C.salad, 'Salad', 3),
@@ -152,7 +152,7 @@ const SOUP: MenuSeed[] = [
 ];
 
 const SALAD: MenuSeed[] = [
-  { name: 'Daros Special Salad', price: 590, description: 'Meat, chicken meat, onion, chili, garlic, mustard' },
+  { name: 'Sobana Special Salad', price: 590, description: 'Meat, chicken meat, onion, chili, garlic, mustard' },
   { name: 'Chicken Salad', price: 450, description: 'Chicken meat, onion, chili, mustard' },
   { name: 'Avocado Salad', price: 340 },
   { name: 'Tuna Salad', price: 500, description: 'Tuna, onion, chili, garlic, tomato' },
@@ -169,7 +169,7 @@ const CHICKEN: MenuSeed[] = [
   { name: 'Chicken Curry', price: 890, description: 'Chicken meat, onion, garlic, pepper, butter, milk, mixed vegetable, rice' },
   { name: 'Chicken Breast with Mushroom Sauce', price: 870, description: 'Chicken breast, butter, milk, onion, garlic, mushroom' },
   { name: 'Whole Roasted Chicken', price: 3400, description: 'Full chicken meat, butter, milk, rice, mixed vegetable, garlic, onion' },
-  { name: 'Daros Special Mixed Grill', price: 1290, description: 'Chicken meat, fish, butter, milk, onion, garlic, rice, mixed vegetable' },
+  { name: 'Sobana Special Mixed Grill', price: 1290, description: 'Chicken meat, fish, butter, milk, onion, garlic, rice, mixed vegetable' },
   { name: 'Chicken Cordon Bleu', price: 1600, description: '2 chicken breast, cheese, garlic, onion, rice, cooked vegetable' },
 ];
 
@@ -206,7 +206,7 @@ const PIZZA: MenuSeed[] = [
   { name: 'Vegetable Pizza', price: 400, description: 'Onion, garlic, mixed vegetable, tomato sauce' },
   { name: 'Tuna Pizza with Cheese', price: 1050, description: 'Tuna, onion, garlic, tomato sauce, cheese' },
   { name: 'Tuna Pizza', price: 750, description: 'Tuna, onion, garlic, tomato sauce' },
-  { name: 'Daros Special Pizza', price: 930, description: 'Meat, tuna, chicken, egg, cheese, black olive' },
+  { name: 'Sobana Special Pizza', price: 930, description: 'Meat, tuna, chicken, egg, cheese, black olive' },
   { name: 'Four Season Pizza', price: 800, description: 'Chicken mortadella, beef mortadella, tuna, mixed vegetable, cheese, tomato sauce' },
   { name: 'Meat Lover Pizza', price: 750, description: 'Meat, onion, garlic, cheese, tomato sauce' },
 ];
@@ -232,7 +232,7 @@ const TRADITIONAL: MenuSeed[] = [
 ];
 
 const SNACK: MenuSeed[] = [
-  { name: 'Daros Special Burger', price: 750 },
+  { name: 'Sobana Special Burger', price: 750 },
   { name: 'Cheese Burger', price: 610 },
   { name: 'Beef Burger', price: 590 },
   { name: 'Chicken Burger', price: 610 },
@@ -244,7 +244,7 @@ const SNACK: MenuSeed[] = [
   { name: 'Chicken Wrap', price: 690 },
   { name: 'Tuna Wrap', price: 600 },
   { name: 'Beef Wrap', price: 590 },
-  { name: 'Daros Special Wrap', price: 1050 },
+  { name: 'Sobana Special Wrap', price: 1050 },
   { name: 'Tuna Sandwich', price: 610 },
   { name: 'French Fries', price: 290 },
 ];
@@ -333,7 +333,7 @@ const WHISKY: MenuSeed[] = [
   { name: 'Chivas Regal 12Y', price: 12820, description: 'Bottle: 12,820 ETB' },
 ];
 
-export const DAROS_MENU_ITEMS: MenuItem[] = [
+export const SOBANA_MENU_ITEMS: MenuItem[] = [
   ...buildItems(C.breakfast, 'breakfast', BREAKFAST),
   ...buildItems(C.soup, 'soup', SOUP),
   ...buildItems(C.salad, 'salad', SALAD),
@@ -352,7 +352,7 @@ export const DAROS_MENU_ITEMS: MenuItem[] = [
   ...buildItems(C.wine, 'wine', WINE.filter((w) => w.price > 0)),
   ...buildItems(C.whisky, 'whisky', WHISKY),
 ].map((menuItem) => {
-  const category = DAROS_CATEGORIES.find((c) => c.id === menuItem.category_id);
+  const category = SOBANA_CATEGORIES.find((c) => c.id === menuItem.category_id);
   return { ...menuItem, category };
 });
 
@@ -369,24 +369,24 @@ export function isDemoMode(): boolean {
 }
 
 export function getDemoRestaurantBySlug(slug: string): Restaurant | null {
-  if (slug === DAROS_RESTAURANT.slug) return DAROS_RESTAURANT;
+  if (slug === SOBANA_RESTAURANT.slug) return SOBANA_RESTAURANT;
   return null;
 }
 
 export function getDemoCategories(restaurantId: string, activeOnly = false): Category[] {
-  if (restaurantId !== DAROS_RESTAURANT_ID) return [];
-  return DAROS_CATEGORIES.filter((c) => !activeOnly || c.status === 'active');
+  if (restaurantId !== SOBANA_RESTAURANT_ID) return [];
+  return SOBANA_CATEGORIES.filter((c) => !activeOnly || c.status === 'active');
 }
 
 export function getDemoMenuItems(restaurantId: string, categoryId?: string): MenuItem[] {
-  if (restaurantId !== DAROS_RESTAURANT_ID) return [];
-  let items = [...DAROS_MENU_ITEMS];
+  if (restaurantId !== SOBANA_RESTAURANT_ID) return [];
+  let items = [...SOBANA_MENU_ITEMS];
   if (categoryId) items = items.filter((i) => i.category_id === categoryId);
   return items.sort((a, b) => a.display_order - b.display_order);
 }
 
 export function getDemoMenuItemById(id: string): MenuItem | null {
-  return DAROS_MENU_ITEMS.find((i) => i.id === id) || null;
+  return SOBANA_MENU_ITEMS.find((i) => i.id === id) || null;
 }
 
 export function searchDemoMenuItems(restaurantId: string, query: string): MenuItem[] {
@@ -400,7 +400,7 @@ export function searchDemoMenuItems(restaurantId: string, query: string): MenuIt
 }
 
 export function getDemoRelatedItems(itemId: string, categoryId: string, limit = 4): MenuItem[] {
-  return DAROS_MENU_ITEMS.filter(
+  return SOBANA_MENU_ITEMS.filter(
     (i) => i.category_id === categoryId && i.id !== itemId && i.availability === 'available'
   ).slice(0, limit);
 }
@@ -417,10 +417,10 @@ export function getDemoDashboardStats(restaurantId: string) {
 }
 
 export function getDemoCategoryById(id: string): Category | null {
-  return DAROS_CATEGORIES.find((c) => c.id === id) || null;
+  return SOBANA_CATEGORIES.find((c) => c.id === id) || null;
 }
 
 export function getDemoRestaurantById(id: string): Restaurant | null {
-  if (id === DAROS_RESTAURANT_ID) return DAROS_RESTAURANT;
+  if (id === SOBANA_RESTAURANT_ID) return SOBANA_RESTAURANT;
   return null;
 }

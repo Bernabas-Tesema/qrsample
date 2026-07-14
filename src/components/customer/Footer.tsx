@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Clock, Share2 } from 'lucide-react';
 import { useRestaurant } from '@/contexts/RestaurantContext';
-import { PRICE_NOTE } from '@/data/daros-menu';
+import { PRICE_NOTE } from '@/data/sobana-menu';
 import { capitalizeDay } from '@/utils';
 
 export function CustomerFooter() {

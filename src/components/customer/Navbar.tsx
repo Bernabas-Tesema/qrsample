@@ -49,7 +49,7 @@ export function CustomerNavbar() {
             <img
               src={restaurant.logo}
               alt={restaurant.name}
-              className="h-11 w-11 rounded-full object-cover ring-2 ring-primary/20"
+              className="h-11 w-11 rounded-full object-contain bg-white ring-2 ring-primary/20"
             />
           ) : (
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white font-display font-bold">

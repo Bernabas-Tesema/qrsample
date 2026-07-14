@@ -3,7 +3,7 @@ import type { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import type { Profile } from '@/types';
 import { DEMO_ADMIN, setDemoAdminSession, isDemoAdminSession } from '@/data/demo-store';
-import { isDemoMode } from '@/data/daros-menu';
+import { isDemoMode } from '@/data/sobana-menu';
 
 interface AuthContextType {
   user: User | null;

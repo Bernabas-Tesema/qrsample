@@ -7,13 +7,13 @@ import { Textarea } from '@/components/ui/Textarea';
 import { ImageUpload } from '@/components/ui/ImageUpload';
 import { PageLoader } from '@/components/ui/Loading';
 import { useAuth } from '@/contexts/AuthContext';
-import { getRestaurantById, updateRestaurant, logActivity, DAROS_RESTAURANT_ID } from '@/services/api';
+import { getRestaurantById, updateRestaurant, logActivity, SOBANA_RESTAURANT_ID } from '@/services/api';
 import { DAYS_OF_WEEK, capitalizeDay } from '@/utils';
 import type { Restaurant, RestaurantFormData } from '@/types';
 
 export function RestaurantSettingsPage() {
   const { profile } = useAuth();
-  const restaurantId = profile?.restaurant_id || DAROS_RESTAURANT_ID;
+  const restaurantId = profile?.restaurant_id || SOBANA_RESTAURANT_ID;
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);

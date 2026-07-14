@@ -86,7 +86,7 @@ The project runs as **two separate applications**:
 
 | App | URL | Purpose |
 |-----|-----|---------|
-| **Customer Menu** | http://localhost:5173/r/daros-hotel | Public QR menu for guests |
+| **Customer Menu** | http://localhost:5173/r/sobana-hotel | Public QR menu for guests |
 | **Admin Dashboard** | http://localhost:5173/admin/login | Staff-only management panel |
 
 Customers never see admin routes. Admins use a completely separate entry point at `/admin`.
@@ -107,7 +107,7 @@ Customer menu and admin dashboard deploy together as **one Vercel project** (sep
 
 | App | Path |
 |-----|------|
-| Customer (QR target) | `https://YOUR_DOMAIN/r/daros-hotel` |
+| Customer (QR target) | `https://YOUR_DOMAIN/r/sobana-hotel` |
 | Admin login | `https://YOUR_DOMAIN/admin/login` |
 
 ### Frontend (Vercel)
@@ -117,7 +117,7 @@ Customer menu and admin dashboard deploy together as **one Vercel project** (sep
 3. Set environment variables:
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_ANON_KEY`
-   - `VITE_DEFAULT_RESTAURANT_SLUG=daros-hotel`
+   - `VITE_DEFAULT_RESTAURANT_SLUG=sobana-hotel`
    - `VITE_USE_DEMO=false` (after Supabase migrations)
    - `VITE_PUBLIC_SITE_URL=https://YOUR_DOMAIN` (for QR codes)
 4. Deploy

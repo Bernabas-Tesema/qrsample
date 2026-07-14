@@ -14,7 +14,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { useAuth } from '@/contexts/AuthContext';
 import { useMenuItems, useCategories } from '@/hooks';
 import {
-  DAROS_RESTAURANT_ID,
+  SOBANA_RESTAURANT_ID,
   createMenuItem,
   updateMenuItem,
   deleteMenuItem,
@@ -25,7 +25,7 @@ import type { MenuItem, MenuItemFormData } from '@/types';
 
 export function MenuItemsAdminPage() {
   const { profile } = useAuth();
-  const restaurantId = profile?.restaurant_id || DAROS_RESTAURANT_ID;
+  const restaurantId = profile?.restaurant_id || SOBANA_RESTAURANT_ID;
   const { items, loading, refresh } = useMenuItems(restaurantId);
   const { categories } = useCategories(restaurantId);
   const [modalOpen, setModalOpen] = useState(false);

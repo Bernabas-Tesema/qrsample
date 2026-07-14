@@ -1,13 +1,13 @@
 import type { Category, MenuItem } from '@/types';
 import {
-  DAROS_CATEGORIES,
-  DAROS_MENU_ITEMS,
-  DAROS_RESTAURANT_ID,
-} from '@/data/daros-menu';
+  SOBANA_CATEGORIES,
+  SOBANA_MENU_ITEMS,
+  SOBANA_RESTAURANT_ID,
+} from '@/data/sobana-menu';
 import { getMenuItemImageByName } from '@/data/item-images';
 
-const STORAGE_KEY = 'daros-demo-menu-items';
-const CATEGORIES_KEY = 'daros-demo-categories';
+const STORAGE_KEY = 'sobana-demo-menu-items';
+const CATEGORIES_KEY = 'sobana-demo-categories';
 
 function loadItems(): MenuItem[] {
   try {
@@ -16,7 +16,7 @@ function loadItems(): MenuItem[] {
   } catch {
     /* ignore */
   }
-  return DAROS_MENU_ITEMS.map((item) => ({ ...item }));
+  return SOBANA_MENU_ITEMS.map((item) => ({ ...item }));
 }
 
 function saveItems(items: MenuItem[]) {
@@ -30,16 +30,16 @@ function loadCategories(): Category[] {
   } catch {
     /* ignore */
   }
-  return DAROS_CATEGORIES.map((c) => ({ ...c }));
+  return SOBANA_CATEGORIES.map((c) => ({ ...c }));
 }
 
 function saveCategories(categories: Category[]) {
   localStorage.setItem(CATEGORIES_KEY, JSON.stringify(categories));
 }
 
-let itemsCache = typeof localStorage !== 'undefined' ? loadItems() : [...DAROS_MENU_ITEMS];
+let itemsCache = typeof localStorage !== 'undefined' ? loadItems() : [...SOBANA_MENU_ITEMS];
 let categoriesCache =
-  typeof localStorage !== 'undefined' ? loadCategories() : [...DAROS_CATEGORIES];
+  typeof localStorage !== 'undefined' ? loadCategories() : [...SOBANA_CATEGORIES];
 
 function withCategory(item: MenuItem): MenuItem {
   const category = categoriesCache.find((c) => c.id === item.category_id);
@@ -47,14 +47,14 @@ function withCategory(item: MenuItem): MenuItem {
 }
 
 export function demoGetCategories(restaurantId: string, activeOnly = false): Category[] {
-  if (restaurantId !== DAROS_RESTAURANT_ID) return [];
+  if (restaurantId !== SOBANA_RESTAURANT_ID) return [];
   return categoriesCache
     .filter((c) => !activeOnly || c.status === 'active')
     .sort((a, b) => a.display_order - b.display_order);
 }
 
 export function demoGetMenuItems(restaurantId: string, categoryId?: string): MenuItem[] {
-  if (restaurantId !== DAROS_RESTAURANT_ID) return [];
+  if (restaurantId !== SOBANA_RESTAURANT_ID) return [];
   let items = itemsCache.map(withCategory);
   if (categoryId) items = items.filter((i) => i.category_id === categoryId);
   return items.sort((a, b) => a.display_order - b.display_order);
@@ -140,13 +140,13 @@ export const DEMO_ADMIN = {
     full_name: 'Berni Admin',
     email: 'berni@gmail.com',
     role: 'admin' as const,
-    restaurant_id: DAROS_RESTAURANT_ID,
+    restaurant_id: SOBANA_RESTAURANT_ID,
     avatar_url: null,
     created_at: new Date().toISOString(),
   },
 };
 
-const DEMO_SESSION_KEY = 'daros-demo-admin-session';
+const DEMO_SESSION_KEY = 'sobana-demo-admin-session';
 
 export function isDemoAdminSession(): boolean {
   try {

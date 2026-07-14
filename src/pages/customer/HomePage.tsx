@@ -4,7 +4,7 @@ import { useRestaurant } from '@/contexts/RestaurantContext';
 import { useCategories } from '@/hooks';
 import { CategoryCard } from '@/components/customer/CategoryCard';
 import { PageLoader } from '@/components/ui/Loading';
-import { PRICE_NOTE } from '@/data/daros-menu';
+import { PRICE_NOTE } from '@/data/sobana-menu';
 import { getImageUrl } from '@/utils';
 
 export function HomePage() {
@@ -36,7 +36,7 @@ export function HomePage() {
                 <img
                   src={restaurant.logo}
                   alt=""
-                  className="mb-4 h-20 w-20 rounded-full object-cover ring-4 ring-white/30 shadow-lg"
+                  className="mb-4 h-20 w-20 rounded-full object-contain bg-white/90 p-1 ring-4 ring-white/30 shadow-lg"
                 />
               )}
               <h1 className="font-display text-4xl font-bold text-white sm:text-5xl lg:text-6xl">

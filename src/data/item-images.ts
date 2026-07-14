@@ -72,7 +72,7 @@ export const MENU_ITEM_IMAGES: Record<string, string> = {
   'Tomato Soup': pFromPool(PEXELS.soup, 'Tomato Soup'),
 
   // ── Salad ──
-  'Daros Special Salad': pFromPool(PEXELS.salad, 'Daros Special Salad'),
+  'Sobana Special Salad': pFromPool(PEXELS.salad, 'Sobana Special Salad'),
   'Chicken Salad': pFromPool(PEXELS.salad, 'Chicken Salad'),
   'Avocado Salad': p(1525353),
   'Tuna Salad': pFromPool(PEXELS.salad, 'Tuna Salad'),
@@ -88,7 +88,7 @@ export const MENU_ITEM_IMAGES: Record<string, string> = {
   'Chicken Curry': foodish('butter-chicken', 'Chicken Curry'),
   'Chicken Breast with Mushroom Sauce': foodish('butter-chicken', 'Chicken Breast with Mushroom Sauce'),
   'Whole Roasted Chicken': foodish('butter-chicken', 'Whole Roasted Chicken'),
-  'Daros Special Mixed Grill': foodish('biryani', 'Daros Special Mixed Grill'),
+  'Sobana Special Mixed Grill': foodish('biryani', 'Sobana Special Mixed Grill'),
   'Chicken Cordon Bleu': pFromPool(PEXELS.chicken, 'Chicken Cordon Bleu'),
 
   // ── Fish Corner ──
@@ -121,7 +121,7 @@ export const MENU_ITEM_IMAGES: Record<string, string> = {
   'Vegetable Pizza': foodish('pizza', 'Vegetable Pizza'),
   'Tuna Pizza with Cheese': foodish('pizza', 'Tuna Pizza with Cheese'),
   'Tuna Pizza': foodish('pizza', 'Tuna Pizza'),
-  'Daros Special Pizza': foodish('pizza', 'Daros Special Pizza'),
+  'Sobana Special Pizza': foodish('pizza', 'Sobana Special Pizza'),
   'Four Season Pizza': foodish('pizza', 'Four Season Pizza'),
   'Meat Lover Pizza': foodish('pizza', 'Meat Lover Pizza'),
 
@@ -145,7 +145,7 @@ export const MENU_ITEM_IMAGES: Record<string, string> = {
   'Bulla with Butter': pFromPool(PEXELS.injera, 'Bulla with Butter'),
 
   // ── Snack and Sandwich ──
-  'Daros Special Burger': foodish('burger', 'Daros Special Burger'),
+  'Sobana Special Burger': foodish('burger', 'Sobana Special Burger'),
   'Cheese Burger': foodish('burger', 'Cheese Burger'),
   'Beef Burger': foodish('burger', 'Beef Burger'),
   'Chicken Burger': foodish('burger', 'Chicken Burger'),
@@ -157,7 +157,7 @@ export const MENU_ITEM_IMAGES: Record<string, string> = {
   'Chicken Wrap': foodish('samosa', 'Chicken Wrap'),
   'Tuna Wrap': foodish('samosa', 'Tuna Wrap'),
   'Beef Wrap': foodish('samosa', 'Beef Wrap'),
-  'Daros Special Wrap': foodish('samosa', 'Daros Special Wrap'),
+  'Sobana Special Wrap': foodish('samosa', 'Sobana Special Wrap'),
   'Tuna Sandwich': pFromPool(PEXELS.sandwich, 'Tuna Sandwich'),
   'French Fries': p(1583884),
 

@@ -49,7 +49,7 @@ export default function CustomerApp() {
     <BrowserRouter>
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          <Route path="/" element={<Navigate to="/r/daros-hotel" replace />} />
+          <Route path="/" element={<Navigate to="/r/sobana-hotel" replace />} />
 
           {/* Prevent /admin from falling through to the hotel menu */}
           <Route path="/admin/*" element={<PageLoader text="Loading admin dashboard..." />} />
@@ -64,7 +64,7 @@ export default function CustomerApp() {
             <Route path="contact" element={<ContactPage />} />
           </Route>
 
-          <Route path="*" element={<Navigate to="/r/daros-hotel" replace />} />
+          <Route path="*" element={<Navigate to="/r/sobana-hotel" replace />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

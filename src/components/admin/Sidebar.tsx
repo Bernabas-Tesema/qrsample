@@ -42,12 +42,12 @@ export function AdminSidebar() {
     <aside className="flex h-full w-64 flex-col border-r border-border bg-white">
       <div className="flex h-16 items-center gap-3 border-b border-border px-5">
         <img
-          src="/images/daros-logo.png"
-          alt="Daros International Hotel"
-          className="h-10 w-10 rounded-full object-cover"
+          src="/images/sobana-logo.png"
+          alt="Sobana Hotel"
+          className="h-10 w-10 rounded-full object-contain bg-white"
         />
         <div className="min-w-0">
-          <p className="text-sm font-semibold text-text-primary truncate">Daros Admin</p>
+          <p className="text-sm font-semibold text-text-primary truncate">Sobana Admin</p>
           <p className="text-xs text-text-secondary truncate">
             {profile?.full_name || profile?.email || 'Administrator'}
           </p>

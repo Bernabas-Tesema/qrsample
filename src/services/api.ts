@@ -16,8 +16,8 @@ import {
   getDemoCategoryById,
   searchDemoMenuItems,
   getDemoRelatedItems,
-  DAROS_RESTAURANT_ID,
-} from '@/data/daros-menu';
+  SOBANA_RESTAURANT_ID,
+} from '@/data/sobana-menu';
 import {
   demoGetCategories,
   demoGetMenuItems,
@@ -35,7 +35,7 @@ function useLocalData(): boolean {
   return isDemoMode() || isDemoAdminSession();
 }
 
-export { DAROS_RESTAURANT_ID };
+export { SOBANA_RESTAURANT_ID };
 
 // ─── Restaurant ───────────────────────────────────────────────
 
@@ -130,7 +130,7 @@ export async function getCategories(restaurantId: string, activeOnly = false): P
 
 export async function getCategoryById(id: string): Promise<Category | null> {
   if (useLocalData()) {
-    return demoGetCategories(DAROS_RESTAURANT_ID).find((c) => c.id === id) || getDemoCategoryById(id);
+    return demoGetCategories(SOBANA_RESTAURANT_ID).find((c) => c.id === id) || getDemoCategoryById(id);
   }
 
   const { data, error } = await supabase.from('categories').select('*').eq('id', id).single();
@@ -365,7 +365,7 @@ export async function getDashboardStats(restaurantId: string): Promise<Dashboard
       getMenuItems(restaurantId),
     ]);
 
-    // Supabase not seeded yet — show built-in Daros menu counts
+    // Supabase not seeded yet — show built-in Sobana menu counts
     if (categories.length === 0 && items.length === 0) {
       return buildStats(demoGetCategories(restaurantId), demoGetMenuItems(restaurantId));
     }

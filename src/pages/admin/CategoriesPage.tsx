@@ -12,7 +12,7 @@ import { PageLoader } from '@/components/ui/Loading';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCategories } from '@/hooks';
-import { DAROS_RESTAURANT_ID } from '@/services/api';
+import { SOBANA_RESTAURANT_ID } from '@/services/api';
 import {
   createCategory,
   updateCategory,
@@ -23,7 +23,7 @@ import type { Category, CategoryFormData } from '@/types';
 
 export function CategoriesAdminPage() {
   const { profile } = useAuth();
-  const restaurantId = profile?.restaurant_id || DAROS_RESTAURANT_ID;
+  const restaurantId = profile?.restaurant_id || SOBANA_RESTAURANT_ID;
   const { categories, loading, refresh } = useCategories(restaurantId);
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Category | null>(null);

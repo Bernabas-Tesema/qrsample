@@ -4,13 +4,13 @@ import { AdminHeader } from '@/components/admin/Sidebar';
 import { Card, CardBody } from '@/components/ui/Card';
 import { PageLoader } from '@/components/ui/Loading';
 import { useAuth } from '@/contexts/AuthContext';
-import { DAROS_RESTAURANT_ID, getDashboardStats, getRecentActivity } from '@/services/api';
+import { SOBANA_RESTAURANT_ID, getDashboardStats, getRecentActivity } from '@/services/api';
 import { formatRelativeTime } from '@/utils';
 import type { DashboardStats, ActivityLog } from '@/types';
 
 export function DashboardPage() {
   const { profile } = useAuth();
-  const restaurantId = profile?.restaurant_id || DAROS_RESTAURANT_ID;
+  const restaurantId = profile?.restaurant_id || SOBANA_RESTAURANT_ID;
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [activity, setActivity] = useState<ActivityLog[]>([]);
   const [loading, setLoading] = useState(true);

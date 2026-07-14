@@ -11,7 +11,7 @@ interface RestaurantContextType {
 
 const RestaurantContext = createContext<RestaurantContextType | undefined>(undefined);
 
-const DEFAULT_SLUG = import.meta.env.VITE_DEFAULT_RESTAURANT_SLUG || 'daros-hotel';
+const DEFAULT_SLUG = import.meta.env.VITE_DEFAULT_RESTAURANT_SLUG || 'sobana-hotel';
 
 export function RestaurantProvider({
   children,
