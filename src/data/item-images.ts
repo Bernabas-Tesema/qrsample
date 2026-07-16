@@ -18,6 +18,8 @@ const PEXELS = {
   spirits: [1304540],
   wine: [1283219],
   injera: [958545, 793746, 1775043],
+  juice: [158053, 96974, 1132047, 1337825, 1414110, 2294471, 246382, 1313267],
+  smoothie: [775032, 103566, 1346347, 1199957, 1621837],
 } as const;
 
 const p = (id: number) =>
@@ -72,7 +74,7 @@ export const MENU_ITEM_IMAGES: Record<string, string> = {
   'Tomato Soup': pFromPool(PEXELS.soup, 'Tomato Soup'),
 
   // ── Salad ──
-  'Sobana Special Salad': pFromPool(PEXELS.salad, 'Sobana Special Salad'),
+  'Daros Special Salad': pFromPool(PEXELS.salad, 'Daros Special Salad'),
   'Chicken Salad': pFromPool(PEXELS.salad, 'Chicken Salad'),
   'Avocado Salad': p(1525353),
   'Tuna Salad': pFromPool(PEXELS.salad, 'Tuna Salad'),
@@ -88,7 +90,7 @@ export const MENU_ITEM_IMAGES: Record<string, string> = {
   'Chicken Curry': foodish('butter-chicken', 'Chicken Curry'),
   'Chicken Breast with Mushroom Sauce': foodish('butter-chicken', 'Chicken Breast with Mushroom Sauce'),
   'Whole Roasted Chicken': foodish('butter-chicken', 'Whole Roasted Chicken'),
-  'Sobana Special Mixed Grill': foodish('biryani', 'Sobana Special Mixed Grill'),
+  'Daros Special Mixed Grill': foodish('biryani', 'Daros Special Mixed Grill'),
   'Chicken Cordon Bleu': pFromPool(PEXELS.chicken, 'Chicken Cordon Bleu'),
 
   // ── Fish Corner ──
@@ -121,7 +123,7 @@ export const MENU_ITEM_IMAGES: Record<string, string> = {
   'Vegetable Pizza': foodish('pizza', 'Vegetable Pizza'),
   'Tuna Pizza with Cheese': foodish('pizza', 'Tuna Pizza with Cheese'),
   'Tuna Pizza': foodish('pizza', 'Tuna Pizza'),
-  'Sobana Special Pizza': foodish('pizza', 'Sobana Special Pizza'),
+  'Daros Special Pizza': foodish('pizza', 'Daros Special Pizza'),
   'Four Season Pizza': foodish('pizza', 'Four Season Pizza'),
   'Meat Lover Pizza': foodish('pizza', 'Meat Lover Pizza'),
 
@@ -145,7 +147,7 @@ export const MENU_ITEM_IMAGES: Record<string, string> = {
   'Bulla with Butter': pFromPool(PEXELS.injera, 'Bulla with Butter'),
 
   // ── Snack and Sandwich ──
-  'Sobana Special Burger': foodish('burger', 'Sobana Special Burger'),
+  'Daros Special Burger': foodish('burger', 'Daros Special Burger'),
   'Cheese Burger': foodish('burger', 'Cheese Burger'),
   'Beef Burger': foodish('burger', 'Beef Burger'),
   'Chicken Burger': foodish('burger', 'Chicken Burger'),
@@ -157,7 +159,7 @@ export const MENU_ITEM_IMAGES: Record<string, string> = {
   'Chicken Wrap': foodish('samosa', 'Chicken Wrap'),
   'Tuna Wrap': foodish('samosa', 'Tuna Wrap'),
   'Beef Wrap': foodish('samosa', 'Beef Wrap'),
-  'Sobana Special Wrap': foodish('samosa', 'Sobana Special Wrap'),
+  'Daros Special Wrap': foodish('samosa', 'Daros Special Wrap'),
   'Tuna Sandwich': pFromPool(PEXELS.sandwich, 'Tuna Sandwich'),
   'French Fries': p(1583884),
 
@@ -237,6 +239,27 @@ export const MENU_ITEM_IMAGES: Record<string, string> = {
   'Glam Orange': pFromPool(PEXELS.spirits, 'Glam Orange'),
   'Drum Blue': pFromPool(PEXELS.spirits, 'Drum Blue'),
   'Chivas Regal 12Y': pFromPool(PEXELS.spirits, 'Chivas Regal 12Y'),
+
+  // ── Juice ──
+  'Orange Juice': p(158053),
+  'Mango Juice': p(2294471),
+  'Pineapple Juice': p(246382),
+  'Papaya Juice': pFromPool(PEXELS.fruit, 'Papaya Juice'),
+  'Avocado Juice': p(1525353),
+  'Strawberry Juice': p(46174),
+  'Mixed Juice': p(1132047),
+  'Lemon Juice': p(1414110),
+  'Water Melon Juice': p(1313267),
+  'Banana Juice': p(1093038),
+
+  // ── Special Smoothie ──
+  'AKU-KOO-LU': p(775032),
+  'Passion': p(1199957),
+  'Ayire': p(312418),
+  'Banana Smoothie / Milk Shake': p(1093038),
+  'Mango Smoothie / Milk Shake': p(2294471),
+  'Strawberry Sunshine': p(46174),
+  'Special Smoothie': p(1346347),
 };
 
 const MENU_ITEM_IMAGES_LOWER = Object.fromEntries(
@@ -261,6 +284,8 @@ export const CATEGORY_IMAGES: Record<string, string> = {
   'Snack and Sandwich': foodish('burger', 'burger-default'),
   Dessert: foodish('dessert', 'dessert-default'),
   'Extra Topping': p(958545),
+  Juice: p(158053),
+  'Special Smoothie': p(1346347),
   'Hot Beverages': p(312418),
   'Beverages & Beers': p(1267328),
   Vodka: p(1304540),
@@ -281,6 +306,8 @@ export const CATEGORY_ID_TO_NAME: Record<string, string> = {
   'cat-snack': 'Snack and Sandwich',
   'cat-dessert': 'Dessert',
   'cat-extra': 'Extra Topping',
+  'cat-juice': 'Juice',
+  'cat-special-smoothie': 'Special Smoothie',
   'cat-hot-beverages': 'Hot Beverages',
   'cat-beverages-beers': 'Beverages & Beers',
   'cat-vodka': 'Vodka',

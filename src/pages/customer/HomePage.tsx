@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Clock, ArrowRight } from 'lucide-react';
 import { useRestaurant } from '@/contexts/RestaurantContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useCategories } from '@/hooks';
 import { CategoryCard } from '@/components/customer/CategoryCard';
 import { PageLoader } from '@/components/ui/Loading';
-import { PRICE_NOTE } from '@/data/sobana-menu';
 import { getImageUrl } from '@/utils';
 
 export function HomePage() {
   const { restaurant, slug } = useRestaurant();
+  const { t } = useLanguage();
   const { categories, loading } = useCategories(restaurant?.id, true);
   const basePath = `/r/${slug}`;
 
@@ -21,7 +22,6 @@ export function HomePage() {
 
   return (
     <div>
-      {/* Hero Banner */}
       <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
         <img
           src={bannerUrl}
@@ -52,7 +52,6 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Info Cards */}
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-4 sm:grid-cols-3">
           {restaurant.address && (
@@ -61,7 +60,7 @@ export function HomePage() {
                 <MapPin className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-text-primary">Address</h3>
+                <h3 className="text-sm font-semibold text-text-primary">{t('address')}</h3>
                 <p className="mt-1 text-sm text-text-secondary">{restaurant.address}</p>
               </div>
             </div>
@@ -72,7 +71,7 @@ export function HomePage() {
                 <Phone className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-text-primary">Phone</h3>
+                <h3 className="text-sm font-semibold text-text-primary">{t('phone')}</h3>
                 <a href={`tel:${restaurant.phone}`} className="mt-1 text-sm text-text-secondary hover:text-primary">
                   {restaurant.phone}
                 </a>
@@ -85,7 +84,7 @@ export function HomePage() {
                 <Clock className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-text-primary">Open Today</h3>
+                <h3 className="text-sm font-semibold text-text-primary">{t('openToday')}</h3>
                 <p className="mt-1 text-sm text-text-secondary">
                   {restaurant.opening_hours.monday}
                 </p>
@@ -95,12 +94,11 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Introduction */}
       {restaurant.description && (
         <section className="bg-gray-50 py-16">
           <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
             <h2 className="font-display text-3xl font-semibold text-text-primary">
-              About Our Restaurant
+              {t('aboutRestaurant')}
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-text-secondary">
               {restaurant.description}
@@ -109,20 +107,19 @@ export function HomePage() {
         </section>
       )}
 
-      {/* Categories */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="font-display text-3xl font-semibold text-text-primary">
-              Menu Categories
+              {t('menuCategories')}
             </h2>
-            <p className="mt-1 text-text-secondary">Explore our delicious offerings</p>
+            <p className="mt-1 text-text-secondary">{t('exploreOfferings')}</p>
           </div>
           <Link
             to={`${basePath}/categories`}
             className="hidden items-center gap-1 text-sm font-medium text-primary hover:text-primary-hover sm:flex"
           >
-            View All <ArrowRight className="h-4 w-4" />
+            {t('viewAll')} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 
@@ -146,12 +143,12 @@ export function HomePage() {
             to={`${basePath}/menu`}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-medium text-white hover:bg-primary-hover transition-colors"
           >
-            Browse Full Menu <ArrowRight className="h-4 w-4" />
+            {t('browseFullMenu')} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 
         <p className="mt-10 text-center text-sm text-text-secondary italic">
-          {PRICE_NOTE}
+          {t('priceNote')}
         </p>
       </section>
     </div>

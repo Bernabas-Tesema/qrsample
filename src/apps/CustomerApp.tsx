@@ -1,6 +1,9 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useParams, useLocation } from 'react-router-dom';
 import { RestaurantProvider } from '@/contexts/RestaurantContext';
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import { CartProvider } from '@/contexts/CartContext';
+import { RatingProvider } from '@/contexts/RatingContext';
 import { PageLoader } from '@/components/ui/Loading';
 
 const CustomerLayout = lazy(() =>
@@ -28,7 +31,6 @@ const ContactPage = lazy(() =>
   import('@/pages/customer/AboutContactPage').then((m) => ({ default: m.ContactPage }))
 );
 
-/** Full page load so Vite/Vercel serves admin/index.html */
 function RedirectToAdmin() {
   const location = useLocation();
   const [showFallback, setShowFallback] = useState(false);
@@ -39,11 +41,10 @@ function RedirectToAdmin() {
       : `${location.pathname}${location.search}${location.hash}` || '/admin/login';
 
   useEffect(() => {
-    const key = 'sobana_admin_redirect_at';
+    const key = 'daros_admin_redirect_at';
     const last = Number(sessionStorage.getItem(key) || 0);
     const now = Date.now();
 
-    // Avoid reload loops if the customer SPA keeps catching /admin
     if (now - last < 4000) {
       setShowFallback(true);
       return;
@@ -81,7 +82,13 @@ function RestaurantRoutes() {
 
   return (
     <RestaurantProvider slug={slug}>
-      <CustomerLayout />
+      <LanguageProvider>
+        <CartProvider>
+          <RatingProvider>
+            <CustomerLayout />
+          </RatingProvider>
+        </CartProvider>
+      </LanguageProvider>
     </RestaurantProvider>
   );
 }
@@ -91,8 +98,7 @@ export default function CustomerApp() {
     <BrowserRouter>
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          <Route path="/" element={<Navigate to="/r/sobana-hotel" replace />} />
-
+          <Route path="/" element={<Navigate to="/r/daros-hotel" replace />} />
           <Route path="/admin/*" element={<RedirectToAdmin />} />
 
           <Route path="/r/:slug" element={<RestaurantRoutes />}>
@@ -105,7 +111,7 @@ export default function CustomerApp() {
             <Route path="contact" element={<ContactPage />} />
           </Route>
 
-          <Route path="*" element={<Navigate to="/r/sobana-hotel" replace />} />
+          <Route path="*" element={<Navigate to="/r/daros-hotel" replace />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

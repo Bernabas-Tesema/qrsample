@@ -1,4 +1,5 @@
 import { useRestaurant } from '@/contexts/RestaurantContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useCategories, useMenuItems } from '@/hooks';
 import { CategoryCard } from '@/components/customer/CategoryCard';
 import { PageLoader } from '@/components/ui/Loading';
@@ -7,6 +8,7 @@ import { Grid3X3 } from 'lucide-react';
 
 export function CategoriesPage() {
   const { restaurant } = useRestaurant();
+  const { t } = useLanguage();
   const { categories, loading } = useCategories(restaurant?.id, true);
   const { items } = useMenuItems(restaurant?.id, undefined, { availableOnly: true });
 
@@ -17,15 +19,13 @@ export function CategoriesPage() {
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="text-center">
         <h1 className="font-display text-3xl font-bold text-text-primary sm:text-4xl">
-          Categories
+          {t('categories')}
         </h1>
-        <p className="mt-2 text-text-secondary">
-          Browse our menu by category
-        </p>
+        <p className="mt-2 text-text-secondary">{t('menuSubtitle')}</p>
       </div>
 
       {loading ? (
-        <PageLoader text="Loading categories..." />
+        <PageLoader text={t('loading')} />
       ) : categories.length === 0 ? (
         <EmptyState
           icon={<Grid3X3 className="h-8 w-8" />}

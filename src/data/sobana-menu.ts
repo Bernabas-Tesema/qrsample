@@ -6,16 +6,16 @@ export const SOBANA_RESTAURANT_ID = 'b0000000-0000-0000-0000-000000000001';
 
 export const SOBANA_RESTAURANT: Restaurant = {
   id: SOBANA_RESTAURANT_ID,
-  slug: 'sobana-hotel',
-  name: 'Sobana Hotel',
-  logo: '/images/sobana-logo.png',
-  banner: '/images/sobana-banner.jpg',
+  slug: 'daros-hotel',
+  name: 'Daros International Hotel',
+  logo: '/images/daros-logo.png',
+  banner: '/images/daros-banner.jpg',
   description:
-    'Welcome to Sobana Hotel Arba Minch — enjoy our full restaurant menu featuring traditional Ethiopian dishes, international cuisine, fresh seafood, pizza, pasta, and premium beverages.',
+    'Welcome to Daros Hotel Arba Minch — enjoy our full restaurant menu featuring traditional Ethiopian dishes, international cuisine, fresh seafood, pizza, pasta, and premium beverages.',
   phone: '+251 912 549 009',
-  email: 'info@sobanahotel.et',
+  email: 'info@daroshotel.et',
   address: 'Arba Minch, Ethiopia',
-  welcome_message: 'Thank you for visiting Sobana Hotel — enjoy every meal.',
+  welcome_message: 'Thank you for visiting Daros International Hotel — enjoy every meal.',
   opening_hours: {
     monday: '6:00 AM - 11:00 PM',
     tuesday: '6:00 AM - 11:00 PM',
@@ -26,9 +26,13 @@ export const SOBANA_RESTAURANT: Restaurant = {
     sunday: '7:00 AM - 11:00 PM',
   },
   social_links: {
+    facebook: 'https://www.facebook.com/daroshotel',
+    instagram: 'https://www.instagram.com/daroshotel',
+    tiktok: 'https://www.tiktok.com/@daroshotel',
     whatsapp: 'https://wa.me/251912549009',
+    youtube: 'https://www.youtube.com/@daroshotel',
   },
-  google_maps_url: 'https://maps.google.com/?q=Arba+Minch+Ethiopia',
+  google_maps_url: 'https://maps.google.com/?q=Daros+International+Hotel+Arba+Minch',
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
 };
@@ -81,6 +85,8 @@ const C = {
   snack: 'cat-snack',
   dessert: 'cat-dessert',
   extra: 'cat-extra',
+  juice: 'cat-juice',
+  smoothie: 'cat-special-smoothie',
   hotBev: 'cat-hot-beverages',
   beverages: 'cat-beverages-beers',
   vodka: 'cat-vodka',
@@ -101,11 +107,13 @@ export const SOBANA_CATEGORIES: Category[] = [
   cat(C.snack, 'Snack and Sandwich', 10),
   cat(C.dessert, 'Dessert', 11),
   cat(C.extra, 'Extra Topping', 12),
-  cat(C.hotBev, 'Hot Beverages', 13),
-  cat(C.beverages, 'Beverages & Beers', 14),
-  cat(C.vodka, 'Vodka', 15),
-  cat(C.wine, 'Wine', 16),
-  cat(C.whisky, 'Whisky', 17),
+  cat(C.juice, 'Juice', 13),
+  cat(C.smoothie, 'Special Smoothie', 14),
+  cat(C.hotBev, 'Hot Beverages', 15),
+  cat(C.beverages, 'Beverages & Beers', 16),
+  cat(C.vodka, 'Vodka', 17),
+  cat(C.wine, 'Wine', 18),
+  cat(C.whisky, 'Whisky', 19),
 ];
 
 function buildItems(
@@ -152,7 +160,7 @@ const SOUP: MenuSeed[] = [
 ];
 
 const SALAD: MenuSeed[] = [
-  { name: 'Sobana Special Salad', price: 590, description: 'Meat, chicken meat, onion, chili, garlic, mustard' },
+  { name: 'Daros Special Salad', price: 590, description: 'Meat, chicken meat, onion, chili, garlic, mustard' },
   { name: 'Chicken Salad', price: 450, description: 'Chicken meat, onion, chili, mustard' },
   { name: 'Avocado Salad', price: 340 },
   { name: 'Tuna Salad', price: 500, description: 'Tuna, onion, chili, garlic, tomato' },
@@ -169,7 +177,7 @@ const CHICKEN: MenuSeed[] = [
   { name: 'Chicken Curry', price: 890, description: 'Chicken meat, onion, garlic, pepper, butter, milk, mixed vegetable, rice' },
   { name: 'Chicken Breast with Mushroom Sauce', price: 870, description: 'Chicken breast, butter, milk, onion, garlic, mushroom' },
   { name: 'Whole Roasted Chicken', price: 3400, description: 'Full chicken meat, butter, milk, rice, mixed vegetable, garlic, onion' },
-  { name: 'Sobana Special Mixed Grill', price: 1290, description: 'Chicken meat, fish, butter, milk, onion, garlic, rice, mixed vegetable' },
+  { name: 'Daros Special Mixed Grill', price: 1290, description: 'Chicken meat, fish, butter, milk, onion, garlic, rice, mixed vegetable' },
   { name: 'Chicken Cordon Bleu', price: 1600, description: '2 chicken breast, cheese, garlic, onion, rice, cooked vegetable' },
 ];
 
@@ -206,7 +214,7 @@ const PIZZA: MenuSeed[] = [
   { name: 'Vegetable Pizza', price: 400, description: 'Onion, garlic, mixed vegetable, tomato sauce' },
   { name: 'Tuna Pizza with Cheese', price: 1050, description: 'Tuna, onion, garlic, tomato sauce, cheese' },
   { name: 'Tuna Pizza', price: 750, description: 'Tuna, onion, garlic, tomato sauce' },
-  { name: 'Sobana Special Pizza', price: 930, description: 'Meat, tuna, chicken, egg, cheese, black olive' },
+  { name: 'Daros Special Pizza', price: 930, description: 'Meat, tuna, chicken, egg, cheese, black olive' },
   { name: 'Four Season Pizza', price: 800, description: 'Chicken mortadella, beef mortadella, tuna, mixed vegetable, cheese, tomato sauce' },
   { name: 'Meat Lover Pizza', price: 750, description: 'Meat, onion, garlic, cheese, tomato sauce' },
 ];
@@ -232,7 +240,7 @@ const TRADITIONAL: MenuSeed[] = [
 ];
 
 const SNACK: MenuSeed[] = [
-  { name: 'Sobana Special Burger', price: 750 },
+  { name: 'Daros Special Burger', price: 750 },
   { name: 'Cheese Burger', price: 610 },
   { name: 'Beef Burger', price: 590 },
   { name: 'Chicken Burger', price: 610 },
@@ -244,7 +252,7 @@ const SNACK: MenuSeed[] = [
   { name: 'Chicken Wrap', price: 690 },
   { name: 'Tuna Wrap', price: 600 },
   { name: 'Beef Wrap', price: 590 },
-  { name: 'Sobana Special Wrap', price: 1050 },
+  { name: 'Daros Special Wrap', price: 1050 },
   { name: 'Tuna Sandwich', price: 610 },
   { name: 'French Fries', price: 290 },
 ];
@@ -333,6 +341,58 @@ const WHISKY: MenuSeed[] = [
   { name: 'Chivas Regal 12Y', price: 12820, description: 'Bottle: 12,820 ETB' },
 ];
 
+const JUICE: MenuSeed[] = [
+  { name: 'Orange Juice', price: 300 },
+  { name: 'Mango Juice', price: 160 },
+  { name: 'Pineapple Juice', price: 200 },
+  { name: 'Papaya Juice', price: 150 },
+  { name: 'Avocado Juice', price: 160 },
+  { name: 'Strawberry Juice', price: 250 },
+  { name: 'Mixed Juice', price: 200 },
+  { name: 'Lemon Juice', price: 160 },
+  { name: 'Water Melon Juice', price: 150 },
+  { name: 'Banana Juice', price: 150 },
+];
+
+const SPECIAL_SMOOTHIE: MenuSeed[] = [
+  {
+    name: 'AKU-KOO-LU',
+    price: 250,
+    description: 'Lettuce, banana, avocado, milk, caramel, ice',
+  },
+  {
+    name: 'Passion',
+    price: 230,
+    description: 'Mango, strawberry, banana, cinnamon, syrup, ice, milk',
+  },
+  {
+    name: 'Ayire',
+    price: 230,
+    description: 'Coffee, milk, cocoa, banana, chocolate, ice',
+  },
+  {
+    name: 'Banana Smoothie / Milk Shake',
+    price: 150,
+    description: 'Banana, milk, crackers, honey, ice',
+  },
+  {
+    name: 'Mango Smoothie / Milk Shake',
+    price: 230,
+    description: 'Mango, milk, crackers, honey, ice',
+  },
+  {
+    name: 'Strawberry Sunshine',
+    price: 200,
+    description: 'Strawberry, banana, peanut, milk, syrup, ice',
+  },
+  {
+    name: 'Special Smoothie',
+    price: 300,
+    description:
+      'Strawberry, mango, banana, flax seed, peanut, chocolate, caramel, strawberry syrup, ice',
+  },
+];
+
 export const SOBANA_MENU_ITEMS: MenuItem[] = [
   ...buildItems(C.breakfast, 'breakfast', BREAKFAST),
   ...buildItems(C.soup, 'soup', SOUP),
@@ -346,6 +406,8 @@ export const SOBANA_MENU_ITEMS: MenuItem[] = [
   ...buildItems(C.snack, 'snack', SNACK),
   ...buildItems(C.dessert, 'dessert', DESSERT),
   ...buildItems(C.extra, 'extra', EXTRA),
+  ...buildItems(C.juice, 'juice', JUICE),
+  ...buildItems(C.smoothie, 'smoothie', SPECIAL_SMOOTHIE),
   ...buildItems(C.hotBev, 'hot-bev', HOT_BEV),
   ...buildItems(C.beverages, 'bev', BEVERAGES),
   ...buildItems(C.vodka, 'vodka', VODKA),

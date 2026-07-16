@@ -42,12 +42,12 @@ export function AdminLoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center">
           <img
-            src="/images/sobana-logo.png"
-            alt="Sobana Hotel"
+            src="/images/daros-logo.png"
+            alt="Daros International Hotel"
             className="mx-auto h-20 w-20 rounded-full object-contain bg-white shadow-md"
           />
           <h1 className="mt-4 font-display text-2xl font-bold text-text-primary">
-            Sobana Admin Dashboard
+            Daros Admin Dashboard
           </h1>
           <p className="mt-1 text-sm text-text-secondary">
             Sign in to manage menu, categories, and restaurant settings
@@ -69,7 +69,7 @@ export function AdminLoginPage() {
               <Input
                 label="Email"
                 type="email"
-                placeholder="admin@sobanahotel.et"
+                placeholder="admin@daroshotel.et"
                 error={errors.email?.message}
                 {...register('email', { required: 'Email is required' })}
               />

@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useRestaurant } from '@/contexts/RestaurantContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useMenuItems, useCategories, useDebounce } from '@/hooks';
 import { FoodCard } from '@/components/customer/FoodCard';
 import { SearchBar } from '@/components/ui/SearchBar';
@@ -10,6 +11,7 @@ import { UtensilsCrossed } from 'lucide-react';
 
 export function MenuPage() {
   const { restaurant } = useRestaurant();
+  const { t, translateCategory } = useLanguage();
   const { items, loading } = useMenuItems(restaurant?.id, undefined, { availableOnly: true });
   const { categories } = useCategories(restaurant?.id, true);
   const [search, setSearch] = useState('');
@@ -37,26 +39,24 @@ export function MenuPage() {
   }, [items, categoryFilter, debouncedSearch]);
 
   const categoryOptions = [
-    { value: 'all', label: 'All Categories' },
-    ...categories.map((c) => ({ value: c.id, label: c.name })),
+    { value: 'all', label: t('allCategories') },
+    ...categories.map((c) => ({ value: c.id, label: translateCategory(c.name) })),
   ];
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="text-center">
         <h1 className="font-display text-3xl font-bold text-text-primary sm:text-4xl">
-          Our Menu
+          {t('ourMenu')}
         </h1>
-        <p className="mt-2 text-text-secondary">
-          Discover our carefully crafted dishes
-        </p>
+        <p className="mt-2 text-text-secondary">{t('menuSubtitle')}</p>
       </div>
 
       <div className="mt-8 flex flex-col gap-4 sm:flex-row">
         <SearchBar
           value={search}
           onChange={setSearch}
-          placeholder="Search by name or category..."
+          placeholder={t('searchPlaceholder')}
           className="flex-1"
         />
         <Select
@@ -68,7 +68,7 @@ export function MenuPage() {
       </div>
 
       {loading ? (
-        <PageLoader text="Loading menu..." />
+        <PageLoader text={t('loading')} />
       ) : filtered.length === 0 ? (
         <EmptyState
           icon={<UtensilsCrossed className="h-8 w-8" />}

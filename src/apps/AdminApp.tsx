@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { RatingProvider } from '@/contexts/RatingContext';
 import { PageLoader } from '@/components/ui/Loading';
 
 const AdminLayout = lazy(() =>
@@ -33,28 +34,30 @@ const SettingsPage = lazy(() =>
 
 export default function AdminApp() {
   useEffect(() => {
-    sessionStorage.removeItem('sobana_admin_redirect_at');
+    sessionStorage.removeItem('daros_admin_redirect_at');
   }, []);
 
   return (
     <BrowserRouter basename="/admin">
       <AuthProvider>
-        <Suspense fallback={<PageLoader text="Loading dashboard..." />}>
-          <Routes>
-            <Route path="/login" element={<AdminLoginPage />} />
-            <Route path="/" element={<AdminLayout />}>
-              <Route index element={<DashboardPage />} />
-              <Route path="categories" element={<CategoriesAdminPage />} />
-              <Route path="menu-items" element={<MenuItemsAdminPage />} />
-              <Route path="restaurant" element={<RestaurantSettingsPage />} />
-              <Route path="media" element={<MediaLibraryPage />} />
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="settings" element={<SettingsPage />} />
-            </Route>
+        <RatingProvider>
+          <Suspense fallback={<PageLoader text="Loading dashboard..." />}>
+            <Routes>
+              <Route path="/login" element={<AdminLoginPage />} />
+              <Route path="/" element={<AdminLayout />}>
+                <Route index element={<DashboardPage />} />
+                <Route path="categories" element={<CategoriesAdminPage />} />
+                <Route path="menu-items" element={<MenuItemsAdminPage />} />
+                <Route path="restaurant" element={<RestaurantSettingsPage />} />
+                <Route path="media" element={<MediaLibraryPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="settings" element={<SettingsPage />} />
+              </Route>
 
-            <Route path="*" element={<Navigate to="/login" replace />} />
-          </Routes>
-        </Suspense>
+              <Route path="*" element={<Navigate to="/login" replace />} />
+            </Routes>
+          </Suspense>
+        </RatingProvider>
       </AuthProvider>
     </BrowserRouter>
   );

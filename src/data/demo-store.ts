@@ -12,7 +12,17 @@ const CATEGORIES_KEY = 'sobana-demo-categories';
 function loadItems(): MenuItem[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as MenuItem[];
+    if (raw) {
+      const stored = JSON.parse(raw) as MenuItem[];
+      const byId = new Map(stored.map((i) => [i.id, i]));
+      // Merge any newly seeded items (e.g. Juice / Smoothie) into existing demo cache
+      for (const seed of SOBANA_MENU_ITEMS) {
+        if (!byId.has(seed.id)) byId.set(seed.id, { ...seed });
+      }
+      const merged = Array.from(byId.values());
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+      return merged;
+    }
   } catch {
     /* ignore */
   }
@@ -26,7 +36,26 @@ function saveItems(items: MenuItem[]) {
 function loadCategories(): Category[] {
   try {
     const raw = localStorage.getItem(CATEGORIES_KEY);
-    if (raw) return JSON.parse(raw) as Category[];
+    if (raw) {
+      const stored = JSON.parse(raw) as Category[];
+      const byId = new Map(stored.map((c) => [c.id, c]));
+      for (const seed of SOBANA_CATEGORIES) {
+        if (!byId.has(seed.id)) {
+          byId.set(seed.id, { ...seed });
+        } else {
+          // Keep admin edits but sync display_order / name from seed for known IDs if missing fields
+          const existing = byId.get(seed.id)!;
+          byId.set(seed.id, {
+            ...existing,
+            display_order: seed.display_order,
+            image: existing.image || seed.image,
+          });
+        }
+      }
+      const merged = Array.from(byId.values());
+      localStorage.setItem(CATEGORIES_KEY, JSON.stringify(merged));
+      return merged;
+    }
   } catch {
     /* ignore */
   }

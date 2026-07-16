@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/Badge';
 import { PageLoader } from '@/components/ui/Loading';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRatings } from '@/contexts/RatingContext';
 import { useMenuItems, useCategories } from '@/hooks';
 import {
   SOBANA_RESTAURANT_ID,
@@ -20,11 +21,13 @@ import {
   deleteMenuItem,
   logActivity,
 } from '@/services/api';
+import { StarRating } from '@/components/ui/StarRating';
 import { formatPrice } from '@/utils';
 import type { MenuItem, MenuItemFormData } from '@/types';
 
 export function MenuItemsAdminPage() {
   const { profile } = useAuth();
+  const { getRating } = useRatings();
   const restaurantId = profile?.restaurant_id || SOBANA_RESTAURANT_ID;
   const { items, loading, refresh } = useMenuItems(restaurantId);
   const { categories } = useCategories(restaurantId);
@@ -200,6 +203,7 @@ export function MenuItemsAdminPage() {
                         </th>
                         <th className="px-4 py-3 text-left font-medium text-text-secondary">Item</th>
                         <th className="px-4 py-3 text-left font-medium text-text-secondary">Price</th>
+                        <th className="px-4 py-3 text-left font-medium text-text-secondary">Rating</th>
                         <th className="px-4 py-3 text-left font-medium text-text-secondary">Status</th>
                         <th className="px-4 py-3 text-right font-medium text-text-secondary">Actions</th>
                       </tr>
@@ -207,6 +211,7 @@ export function MenuItemsAdminPage() {
                     <tbody>
                       {catItems.map((item) => {
                         const available = item.availability === 'available';
+                        const rating = getRating(item.id);
                         return (
                           <tr
                             key={item.id}
@@ -240,6 +245,19 @@ export function MenuItemsAdminPage() {
                             </td>
                             <td className="px-4 py-3 font-medium text-primary">
                               {formatPrice(item.price)}
+                            </td>
+                            <td className="px-4 py-3">
+                              {rating.count > 0 ? (
+                                <div className="flex flex-col gap-0.5">
+                                  <StarRating value={rating.average} readOnly size="sm" />
+                                  <span className="text-xs text-text-secondary">
+                                    {rating.average.toFixed(1)} · {rating.count}{' '}
+                                    {rating.count === 1 ? 'review' : 'reviews'}
+                                  </span>
+                                </div>
+                              ) : (
+                                <span className="text-xs text-text-secondary">No ratings</span>
+                              )}
                             </td>
                             <td className="px-4 py-3">
                               <Badge variant={available ? 'success' : 'error'}>

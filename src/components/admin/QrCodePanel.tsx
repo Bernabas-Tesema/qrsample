@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Download, Copy, Check, QrCode } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
-const SLUG = import.meta.env.VITE_DEFAULT_RESTAURANT_SLUG || 'sobana-hotel';
+const SLUG = import.meta.env.VITE_DEFAULT_RESTAURANT_SLUG || 'daros-hotel';
 
 export function getCustomerMenuUrl(): string {
   const configured = import.meta.env.VITE_PUBLIC_SITE_URL as string | undefined;
@@ -51,7 +51,7 @@ export function QrCodePanel({ className = '' }: QrCodePanelProps) {
       const objectUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = objectUrl;
-      a.download = 'sobana-menu-qr.png';
+      a.download = 'daros-menu-qr.png';
       a.click();
       URL.revokeObjectURL(objectUrl);
     } catch {
@@ -75,7 +75,7 @@ export function QrCodePanel({ className = '' }: QrCodePanelProps) {
         <div className="rounded-2xl border border-border bg-white p-4 shadow-inner">
           <img
             src={qrUrl}
-            alt="QR code for Sobana menu"
+            alt="QR code for Daros menu"
             className="h-56 w-56"
             width={224}
             height={224}
