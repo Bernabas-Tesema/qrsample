@@ -6,16 +6,16 @@ export const SOBANA_RESTAURANT_ID = 'b0000000-0000-0000-0000-000000000001';
 
 export const SOBANA_RESTAURANT: Restaurant = {
   id: SOBANA_RESTAURANT_ID,
-  slug: 'daros-hotel',
-  name: 'Daros International Hotel',
-  logo: '/images/daros-logo.png',
-  banner: '/images/daros-banner.jpg',
+  slug: 'wubate-hotel',
+  name: 'Wubate Hotel',
+  logo: '/images/wubate-logo-mark.png',
+  banner: '/images/wubate-banner.jpg',
   description:
-    'Welcome to Daros Hotel Arba Minch — enjoy our full restaurant menu featuring traditional Ethiopian dishes, international cuisine, fresh seafood, pizza, pasta, and premium beverages.',
+    'Welcome to Wubate Hotel — enjoy our full restaurant menu featuring traditional Ethiopian dishes, international cuisine, fresh seafood, pizza, pasta, and premium beverages. High quality accommodation services since 1962 EC.',
   phone: '+251 912 549 009',
-  email: 'info@daroshotel.et',
-  address: 'Arba Minch, Ethiopia',
-  welcome_message: 'Thank you for visiting Daros International Hotel — enjoy every meal.',
+  email: 'info@wubatehotel.com',
+  address: 'Ethiopia',
+  welcome_message: 'Thank you for visiting Wubate Hotel — enjoy every meal.',
   opening_hours: {
     monday: '6:00 AM - 11:00 PM',
     tuesday: '6:00 AM - 11:00 PM',
@@ -26,13 +26,13 @@ export const SOBANA_RESTAURANT: Restaurant = {
     sunday: '7:00 AM - 11:00 PM',
   },
   social_links: {
-    facebook: 'https://www.facebook.com/daroshotel',
-    instagram: 'https://www.instagram.com/daroshotel',
-    tiktok: 'https://www.tiktok.com/@daroshotel',
+    facebook: 'https://www.facebook.com/wubatehotel',
+    instagram: 'https://www.instagram.com/wubatehotel',
+    tiktok: 'https://www.tiktok.com/@wubatehotel',
     whatsapp: 'https://wa.me/251912549009',
-    youtube: 'https://www.youtube.com/@daroshotel',
+    youtube: 'https://www.youtube.com/@wubatehotel',
   },
-  google_maps_url: 'https://maps.google.com/?q=Daros+International+Hotel+Arba+Minch',
+  google_maps_url: 'https://maps.google.com/?q=Wubate+Hotel',
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
 };
@@ -160,7 +160,7 @@ const SOUP: MenuSeed[] = [
 ];
 
 const SALAD: MenuSeed[] = [
-  { name: 'Daros Special Salad', price: 590, description: 'Meat, chicken meat, onion, chili, garlic, mustard' },
+  { name: 'Wubate Special Salad', price: 590, description: 'Meat, chicken meat, onion, chili, garlic, mustard' },
   { name: 'Chicken Salad', price: 450, description: 'Chicken meat, onion, chili, mustard' },
   { name: 'Avocado Salad', price: 340 },
   { name: 'Tuna Salad', price: 500, description: 'Tuna, onion, chili, garlic, tomato' },
@@ -177,7 +177,7 @@ const CHICKEN: MenuSeed[] = [
   { name: 'Chicken Curry', price: 890, description: 'Chicken meat, onion, garlic, pepper, butter, milk, mixed vegetable, rice' },
   { name: 'Chicken Breast with Mushroom Sauce', price: 870, description: 'Chicken breast, butter, milk, onion, garlic, mushroom' },
   { name: 'Whole Roasted Chicken', price: 3400, description: 'Full chicken meat, butter, milk, rice, mixed vegetable, garlic, onion' },
-  { name: 'Daros Special Mixed Grill', price: 1290, description: 'Chicken meat, fish, butter, milk, onion, garlic, rice, mixed vegetable' },
+  { name: 'Wubate Special Mixed Grill', price: 1290, description: 'Chicken meat, fish, butter, milk, onion, garlic, rice, mixed vegetable' },
   { name: 'Chicken Cordon Bleu', price: 1600, description: '2 chicken breast, cheese, garlic, onion, rice, cooked vegetable' },
 ];
 
@@ -214,7 +214,7 @@ const PIZZA: MenuSeed[] = [
   { name: 'Vegetable Pizza', price: 400, description: 'Onion, garlic, mixed vegetable, tomato sauce' },
   { name: 'Tuna Pizza with Cheese', price: 1050, description: 'Tuna, onion, garlic, tomato sauce, cheese' },
   { name: 'Tuna Pizza', price: 750, description: 'Tuna, onion, garlic, tomato sauce' },
-  { name: 'Daros Special Pizza', price: 930, description: 'Meat, tuna, chicken, egg, cheese, black olive' },
+  { name: 'Wubate Special Pizza', price: 930, description: 'Meat, tuna, chicken, egg, cheese, black olive' },
   { name: 'Four Season Pizza', price: 800, description: 'Chicken mortadella, beef mortadella, tuna, mixed vegetable, cheese, tomato sauce' },
   { name: 'Meat Lover Pizza', price: 750, description: 'Meat, onion, garlic, cheese, tomato sauce' },
 ];
@@ -240,7 +240,7 @@ const TRADITIONAL: MenuSeed[] = [
 ];
 
 const SNACK: MenuSeed[] = [
-  { name: 'Daros Special Burger', price: 750 },
+  { name: 'Wubate Special Burger', price: 750 },
   { name: 'Cheese Burger', price: 610 },
   { name: 'Beef Burger', price: 590 },
   { name: 'Chicken Burger', price: 610 },
@@ -252,7 +252,7 @@ const SNACK: MenuSeed[] = [
   { name: 'Chicken Wrap', price: 690 },
   { name: 'Tuna Wrap', price: 600 },
   { name: 'Beef Wrap', price: 590 },
-  { name: 'Daros Special Wrap', price: 1050 },
+  { name: 'Wubate Special Wrap', price: 1050 },
   { name: 'Tuna Sandwich', price: 610 },
   { name: 'French Fries', price: 290 },
 ];

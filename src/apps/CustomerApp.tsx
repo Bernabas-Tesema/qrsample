@@ -41,7 +41,7 @@ function RedirectToAdmin() {
       : `${location.pathname}${location.search}${location.hash}` || '/admin/login';
 
   useEffect(() => {
-    const key = 'daros_admin_redirect_at';
+    const key = 'wubate_admin_redirect_at';
     const last = Number(sessionStorage.getItem(key) || 0);
     const now = Date.now();
 
@@ -98,7 +98,7 @@ export default function CustomerApp() {
     <BrowserRouter>
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          <Route path="/" element={<Navigate to="/r/daros-hotel" replace />} />
+          <Route path="/" element={<Navigate to="/r/wubate-hotel" replace />} />
           <Route path="/admin/*" element={<RedirectToAdmin />} />
 
           <Route path="/r/:slug" element={<RestaurantRoutes />}>
@@ -111,7 +111,7 @@ export default function CustomerApp() {
             <Route path="contact" element={<ContactPage />} />
           </Route>
 
-          <Route path="*" element={<Navigate to="/r/daros-hotel" replace />} />
+          <Route path="*" element={<Navigate to="/r/wubate-hotel" replace />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

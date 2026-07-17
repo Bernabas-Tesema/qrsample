@@ -16,7 +16,7 @@ interface RatingContextType {
 }
 
 const RatingContext = createContext<RatingContextType | undefined>(undefined);
-const STORAGE_KEY = 'daros-ratings';
+const STORAGE_KEY = 'wubate-ratings';
 
 function loadRatings(): RatingsMap {
   try {

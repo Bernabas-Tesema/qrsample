@@ -34,7 +34,7 @@ const SettingsPage = lazy(() =>
 
 export default function AdminApp() {
   useEffect(() => {
-    sessionStorage.removeItem('daros_admin_redirect_at');
+    sessionStorage.removeItem('wubate_admin_redirect_at');
   }, []);
 
   return (

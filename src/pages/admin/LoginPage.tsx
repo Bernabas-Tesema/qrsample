@@ -42,12 +42,12 @@ export function AdminLoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center">
           <img
-            src="/images/daros-logo.png"
-            alt="Daros International Hotel"
+            src="/images/wubate-logo-mark.png"
+            alt="Wubate Hotel"
             className="mx-auto h-20 w-20 rounded-full object-contain bg-white shadow-md"
           />
           <h1 className="mt-4 font-display text-2xl font-bold text-text-primary">
-            Daros Admin Dashboard
+            Wubate Admin Dashboard
           </h1>
           <p className="mt-1 text-sm text-text-secondary">
             Sign in to manage menu, categories, and restaurant settings
@@ -69,7 +69,7 @@ export function AdminLoginPage() {
               <Input
                 label="Email"
                 type="email"
-                placeholder="admin@daroshotel.et"
+                placeholder="admin@wubatehotel.com"
                 error={errors.email?.message}
                 {...register('email', { required: 'Email is required' })}
               />

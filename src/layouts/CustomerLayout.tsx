@@ -15,7 +15,7 @@ export function CustomerLayout() {
     return (
       <ErrorState
         title="Restaurant Not Found"
-        description={`${error}. Guest menu: /r/daros-hotel — Admin: /admin/login`}
+        description={`${error}. Guest menu: /r/wubate-hotel — Admin: /admin/login`}
       />
     );
   }

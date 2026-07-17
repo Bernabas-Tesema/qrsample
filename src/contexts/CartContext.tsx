@@ -20,7 +20,7 @@ interface CartContextType {
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
-const STORAGE_KEY = 'daros-cart';
+const STORAGE_KEY = 'wubate-cart';
 
 function loadCart(): CartLine[] {
   try {
